@@ -1,0 +1,16 @@
+{
+    "llm": {
+        "model": ["hermes3:latest"],
+        "keep_alive": "30m",
+        "all_models": [
+            "hermes3:latest -tested, fast accurate"
+        ],
+        "setup": {
+            "role": "system",
+            "temperature": 0.7,
+            "format": "json",
+            "seed": 42,
+            "num_ctx": 2048
+        }
+    }
+}

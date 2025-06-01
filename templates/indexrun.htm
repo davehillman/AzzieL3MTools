@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <title>Classifier</title>
+        <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
+        <link href="{{url_for('static',filename='css/w3.css')}}" rel="stylesheet">
+        <link href="{{url_for('static',filename='css/background.css')}}" rel="stylesheet">
+
+<style>
+    html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif;padding: 10px;}
+    </style>
+    </head>
+  
+  <body class="w3-flat-belize-hole">
+    <h1>~ CLASSIFIER ~</h1>
+    <h5 class="w3-right-align">Real or Live sensitive information should NOT be used in this application.</h5>
+    <hr>
+
+Query: <br>
+<textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="qrytxt" rows="2" cols="120"></textarea>
+<br><br>
+<button class="w3-button w3-blue" id="btnqry" >Run Query</button>
+&nbsp;&nbsp;
+<button class="w3-button w3-blue" id="btnqryexp">Explain</button>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button class="w3-button w3-blue" id="btnclear">Clear</button>
+
+<br><br>
+Results: <br><textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="llmorig" rows="4" cols="120"></textarea>
+<br><br>
+
+Status: <output id="status">tbd</output>
+
+<br /><br /><br /><br />
+<hr />
+&nbsp;&nbsp;
+<button class="w3-button w3-blue" id="btninitllm" title="Initialize the LLM to prepare for processing.">Init LLM</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button class="w3-button w3-blue" id="btnstopllm" title="Shutdown currently running LLM.">Stop LLM</button>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<button class="w3-button w3-blue" id="btnloadtest" title="Get a sample text line for processing.">Load Test Data</button>
+<hr />
+
+</body>
+<script>
+
+
+$('#btnqry').on('click', function(e) {
+      if (document.getElementById("qrytxt").value == "") { alert("Need to enter a query"); return }
+      document.getElementById("llmorig").value = ""
+      document.getElementById("status").value = "WORKING"
+      runquery("")
+    })
+
+$('#btnqryexp').on('click', function(e) {
+      if (document.getElementById("qrytxt").value == "") { alert("Need to enter a query"); return }
+      document.getElementById("llmorig").value = ""
+      document.getElementById("status").value = "WORKING"
+      runquery("exp")
+    })
+
+$('#btnclear').on('click', function(e) {
+      document.getElementById("qrytxt").value = ""  
+      document.getElementById("llmorig").value = ""
+      // document.getElementById("llmresp").value = ""
+      document.getElementById("status").value = "tbd"
+    })   
+
+       
+    // following runs the query once user has selected criteria.
+    function runquery(ex) {
+      qrytxt = document.getElementById("qrytxt").value 
+      results = runprocajax(qrytxt,ex)
+    
+    }
+
+
+ function runprocajax(qrytxt,ex) {
+  results = []
+  $.ajax({
+    type:'POST',
+    url: '/runquery',
+    data: {qrydata: qrytxt, explain:ex},
+    async: true,
+    success: function(data){
+      results = JSON.parse(data)
+      finishquery(results)
+      },
+    error: function(error){
+      console.log(JSON.stringify(error))
+    }
+  }) 
+
+ }
+ 
+  function finishquery(results)  { 
+      document.getElementById("llmorig").value = results[0]
+      document.getElementById("status").value = "Run COMPLETED "
+
+ }
+
+$('#btninitllm').on('click', function(e) {
+    document.getElementById("status").value = "INITIALIZING LLM"
+    $.ajax({
+    type:'POST',
+    url: '/initllm',
+    data: {},
+    async: true,
+    success: function(data){
+      results = JSON.parse(data)
+      document.getElementById("status").value = "LLM Ready" 
+    },
+    error: function(error){
+      console.log(JSON.stringify(error))
+    }
+  }) 
+})
+
+$('#btnstopllm').on('click', function(e) {
+    document.getElementById("status").value = "STOPPING LLM"
+    $.ajax({
+    type:'POST',
+    url: '/stopllm',
+    data: {},
+    async: true,
+    success: function(data){
+      results = JSON.parse(data)
+      document.getElementById("status").value = "LLM Terminated" 
+    },
+    error: function(error){
+      console.log(JSON.stringify(error))
+    }
+  }) 
+})
+
+$('#btnloadtest').on('click', function(e) {
+    $.ajax({
+    type:'POST',
+    url: '/loadtest',
+    data: {},
+    async: true,
+    success: function(data){
+      results = JSON.parse(data)
+      document.getElementById("qrytxt").value = results
+      },
+    error: function(error){
+      console.log(JSON.stringify(error))
+    }
+  }) 
+})
+
+
+ 
+</script>
+</html>

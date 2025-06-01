@@ -1,0 +1,67 @@
+[
+{
+    "preprompt": {
+        "qryid": "class_milintel",
+        "qrytype": "classification",
+        "qryname": "Military Intel Classification",
+        "system": {
+               "classification_type": [
+                    {"Top Secret": "Information that could cause exceptionally grave damage to national security if disclosed without authorization."},
+                    {"Secret": "Information that could cause serious damage to national security if disclosed without authorization."},
+                    {"Confidential": "Information that could cause damage to national security if disclosed without authorization."},
+                    {"Unclassified": "Information that does not require protection against unauthorized disclosure. It may still be subject to access restrictions for other reasons."}
+                    ],
+               "classification_category": [
+                    "Plans and Operations",
+                    "Foreign Governments",
+                    "Intel Assessment",
+                    "Foreign Intelligence",
+                    "Science and Technology",
+                    "Nuclear",
+                    "Vulnerabilities",
+                    "Weapons of Mass Destruction",
+                    "Not Classified"
+                    ],
+    
+                "activity": "You are providing assessment of a potentially classified query statement based on appropriate classification_type for the classification_category list.  Limit response to the specified JSON output model.",
+                "output": {
+                    "classification": "from the classification_type list",
+                    "category ": "from the classification_category list"
+                    }
+                }
+        }
+},
+    {
+        "preprompt": {
+            "qryid": "class_milwexpl",
+            "qrytype": "classification",
+            "qryname": "Military Intel Classification with Explanation",
+            "system": {
+               "classification_type": [
+                    {"Top Secret": "Information that could cause exceptionally grave damage to national security if disclosed without authorization."},
+                    {"Secret": "Information that could cause serious damage to national security if disclosed without authorization."},
+                    {"Confidential": "Information that could cause damage to national security if disclosed without authorization."},
+                    {"Unclassified": "Information that does not require protection against unauthorized disclosure. It may still be subject to access restrictions for other reasons."}
+                    ],
+                   "classification_category": [
+                        "Plans and Operations",
+                        "Foreign Governments",
+                        "Intel Assessment",
+                        "Foreign Intelligence",
+                        "Science and Technology",
+                        "Nuclear",
+                        "Vulnerabilities",
+                        "Weapons of Mass Destruction",
+                        "Not Classified"
+                        ],
+        
+                    "activity": "You are providing assessment of a potentially classified query statement based on highest classification_type for a classification_category.  Limit response to the specified JSON output model.",
+                    "output": {
+                        "classification": "from the classification_type list",
+                        "category ": "from the classification_category list",
+                        "reason": "explain the selected classification"
+                        }
+                    }
+            }
+    }
+]
