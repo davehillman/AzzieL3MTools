@@ -1,3 +1,4 @@
+<!-- AzzieClassifier, indexrun.htm, D. Hillman, Jun 2025 -->
 <html>
     <head>
         <title>Classifier</title>
@@ -11,27 +12,42 @@
     </head>
   
   <body class="w3-flat-belize-hole">
+  
+  <div class="w3-container w3-cobalt">
     <h1>~ CLASSIFIER ~</h1>
-    <h5 class="w3-right-align">Real or Live sensitive information should NOT be used in this application.</h5>
-    <hr>
+  </div>
 
-Query: <br>
+    
+<div class="w3-container w3-hover-shadow">
+<p>Query: </p>
 <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="qrytxt" rows="2" cols="120"></textarea>
-<br><br>
+<br>
 <button class="w3-button w3-blue" id="btnqry" >Run Query</button>
 &nbsp;&nbsp;
 <button class="w3-button w3-blue" id="btnqryexp">Explain</button>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button class="w3-button w3-blue" id="btnclear">Clear</button>
+<br>
+<br>
+</div>
 
-<br><br>
-Results: <br><textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="llmorig" rows="4" cols="120"></textarea>
-<br><br>
+<br>
 
-Status: <output id="status">tbd</output>
+<div id="divresults" class="w3-container w3-hover-shadow" hidden>
+<p>Results: </p><textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="llmorig" rows="4" cols="120"></textarea>
+
+<br>
+</div>
+
+<br>
+<div>
+<p>Status: <output id="status">Ready</output></p>
+</div>
 
 <br /><br /><br /><br />
+
+<div class="w3-container w3-hover-shadow w3-center">
 <hr />
 &nbsp;&nbsp;
 <button class="w3-button w3-blue" id="btninitllm" title="Initialize the LLM to prepare for processing.">Init LLM</button>
@@ -40,6 +56,9 @@ Status: <output id="status">tbd</output>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <button class="w3-button w3-blue" id="btnloadtest" title="Get a sample text line for processing.">Load Test Data</button>
 <hr />
+<h4 class="w3-right-align">Real or live sensitive information should NOT be used in this application.</h4>
+</div>
+
 
 </body>
 <script>
@@ -62,13 +81,14 @@ $('#btnqryexp').on('click', function(e) {
 $('#btnclear').on('click', function(e) {
       document.getElementById("qrytxt").value = ""  
       document.getElementById("llmorig").value = ""
-      // document.getElementById("llmresp").value = ""
-      document.getElementById("status").value = "tbd"
+      document.getElementById("divresults").hidden = true
+      document.getElementById("status").value = "Ready"
     })   
 
        
     // following runs the query once user has selected criteria.
     function runquery(ex) {
+      document.getElementById("divresults").hidden = true
       qrytxt = document.getElementById("qrytxt").value 
       results = runprocajax(qrytxt,ex)
     
@@ -95,6 +115,7 @@ $('#btnclear').on('click', function(e) {
  
   function finishquery(results)  { 
       document.getElementById("llmorig").value = results[0]
+      document.getElementById("divresults").hidden = false
       document.getElementById("status").value = "Run COMPLETED "
 
  }

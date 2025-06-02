@@ -67,5 +67,6 @@ NOTES:
 2.  LMM initialization typically takes 10 to 30 seconds depending on the platform.
 3.  First queries tend to be a bit slower (2X - 3X later runs).
 4.  Typically, post initialization queries will run in 3-5 seconds for single sentence queries.
+5.  The longer the query, the longer it takes for a response.
 
 

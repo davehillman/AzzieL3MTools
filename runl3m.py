@@ -6,7 +6,9 @@
 import ollama
 import json
 
-## file handling functions  follow
+## provides execution for query processing via the LLM
+
+## file handling functions  follow (housekeeping)
 keep_alive = "30m"
 
 def loadjson(fname):

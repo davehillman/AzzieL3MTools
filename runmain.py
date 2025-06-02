@@ -7,6 +7,8 @@ import runl3m
 import llmproc
 from datetime import datetime
 
+## this is a basic view for running LLMs (start, stop) and processing queries
+
 llmfile = "config/llminit.json"
 
 def initllms():
