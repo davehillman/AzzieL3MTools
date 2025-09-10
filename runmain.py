@@ -1,4 +1,4 @@
-## AzzieClassifier
+## AzzieL3MTools
 ## runmain.py
 ## Hillman
 ## June 2025
@@ -6,28 +6,24 @@
 import runl3m
 import llmproc
 from datetime import datetime
+import utils
 
 ## this is a basic view for running LLMs (start, stop) and processing queries
 
 llmfile = "config/llminit.json"
 
-def initllms():
+def initllms(llmitem):
     initstart = datetime.now()
-    llmset = runl3m.loadjson(llmfile)["llm"]["model"]
-    for i in llmset:
-        llmproc.llmrun(i)
+    llmproc.setllmrun(llmitem)
     print("Total Init Time: " + str(datetime.now() - initstart))
-    # llmsel = runl3m.loadjson(llmfile)
 
-def stopllms():
-    llmset = runl3m.loadjson(llmfile)["llm"]["model"]
-    for i in llmset:
-        llmproc.stopllm(i)
-    # llmsel = runl3m.loadjson(llmfile)
+def stopllms(llmitem):
+    llmproc.stopllm(llmitem)
+
 
 def runq(qry,exp):
-    initllms()
-    llmsel = runl3m.loadjson(llmfile)
+    # initllms(llm)
+    llmsel = utils.loadjson(llmfile)
     print("Running Query(ies)")
     sess_start = datetime.now()
     results =  runl3m.runquery(llmsel, qry,exp)
@@ -36,4 +32,18 @@ def runq(qry,exp):
     total_seconds = h * 3600 + m * 60 + s
     print("Session Duration: " + str(total_seconds))
     return results
+
+
+def getprompts():
+    plist = utils.loadjson('config/llmprompts.json')
+    pnames = []
+    for i in plist:
+        # pnames.append({i["preprompt"]["qryid"]: i["preprompt"]["qryname"]}) # dict
+        pnames.append((i["preprompt"]["qryid"], i["preprompt"]["qryname"]))   #list, list
+    return pnames
+
+
+def getllmlist():
+    return utils.loadjson('config/llminit.json')["llm"]["model"]    
+
 

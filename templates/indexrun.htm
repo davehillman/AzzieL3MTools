@@ -1,110 +1,177 @@
-<!-- AzzieClassifier, indexrun.htm, D. Hillman, Jun 2025 -->
+<!-- AzzieL3MTools, indexrun.htm, D. Hillman, Jun 2025 -->
 <html>
     <head>
-        <title>Classifier</title>
+        <title>Azzie L3M Tools</title>
         <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
         <link href="{{url_for('static',filename='css/w3.css')}}" rel="stylesheet">
         <link href="{{url_for('static',filename='css/background.css')}}" rel="stylesheet">
 
 <style>
-    html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif;padding: 10px;}
+    html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif; padding: 3px;}
     </style>
     </head>
   
   <body class="w3-flat-belize-hole">
   
-  <div class="w3-container w3-cobalt">
-    <h1>~ CLASSIFIER ~</h1>
+
+  <div class="w3-container  w3-hover-shadow w3-round w3-black">
+    <div class="w3-bar">
+      <div class="w3-left w3-center">
+        <p class="w3-xlarge"><a style="text-decoration: none; color: inherit;" href="/"> L3M TOOLS </a></p>
+      </div>
+      <div class="w3-right w3-small w3-center">
+        LLM: &nbsp;&nbsp;  
+        <select class="w3-input w3-black w3-text-white w3-round w3-small" style="width:100%" id="llm_models" title="Select an LLM for processing.">
+          <option value="">Select LLM...</option>
+        </select>
+      </div>      
+  </div>
+</div>
+
+    <br>
+
+    <div class="w3-container w3-hover-shadow w3-round">
+<br>
+
+<div class="w3-bar">
+  <!-- <div class="w3-left">
+    Query:&nbsp;&nbsp;
+  </div> -->
+  <div class="w3-middle" >   
+    <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="qrytxt" rows="3" style="width:80%" title="Enter query for processing." placeholder="Enter Query"></textarea>
+  </div>
+</div>
+<br>
+
+<div class="w3-bar">
+  <div class="w3-left">
+  <select class="w3-input w3-light-blue w3-text-black w3-round"  id="llm_preprompts" title="Select an action for processing.">
+    <option value="">Select Action...</option>
+  </select>
+</div>
+<div class="w3-middle">
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="w3-button w3-blue w3-round" id="btnqry" title="Initiate processing.">Run Query</button>
+</div>
+</div>
+
+<br>
+</div>
+
+<br>
+
+<div id="divresults" class="w3-container w3-hover-shadow w3-round" hidden>
+  <br>
+  <div class="w3-bar">
+    <div class="w3-left">
+      Results: &nbsp;&nbsp;
+    </div>
+    <div class="w3-middle w3-small">
+      <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="llmorig" rows="4" style="width:80%" title="Results from processing in JSON format."></textarea>
+    </div>
+    </div>
+
+    <div class="w3-bar">
+
+    <div class="w3-container" style="width:90%">
+      <pre class="w3-container w3-light-blue w3-text-black w3-border w3-round w3-padding" id="output" style="white-space: pre-wrap;  word-wrap: break-word;" title="Pretty print view of JSON results."></pre>
+      <br>
+    </div>
+
+  </div>
+<br>
+</div>
+
+
+<div id="showsession" class="w3-modal">
+  <div class="w3-modal-content w3-blue  w3-border w3-round w3-padding" style="margin-top:10vh; width:70%;">
+    <header class="w3-container">
+      <span onclick="document.getElementById('showsession').style.display='none'"  class="w3-button w3-display-topright">&times;</span>
+      <h3>Session History</h3>
+    </header>
+    <div class=""w3-container w3-blue w3-center">
+          <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="sessbox" style="height:40%; width:100%" title="Keeps track of current queries and responses." ></textarea>
+    </div>
+          <footer class="w3-container w3-blue">
+        <p></p>
+      </footer>
+  </div>
+</div>
+
+<div class="w3-container w3-bottom  w3-hover-shadow w3-round w3-black w3-small">
+<div class="w3-bar">
+  <div class="w3-left">
+    <p class="w3-left">Status: <output id="status"  >Ready</output></p>
   </div>
 
-    
-<div class="w3-container w3-hover-shadow">
-<p>Query: </p>
-<textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="qrytxt" rows="2" cols="120"></textarea>
-<br>
-<button class="w3-button w3-blue" id="btnqry" >Run Query</button>
-&nbsp;&nbsp;
-<button class="w3-button w3-blue" id="btnqryexp">Explain</button>
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<button class="w3-button w3-blue" id="btnclear">Clear</button>
-<br>
-<br>
+  <div class="w3-middle w3-center">
+    <button class="w3-button w3-black  w3-round" id="btnloadtest" title="Get a sample text line for processing.">Load Test Data</button>
+    &nbsp;&nbsp;
+    <button class="w3-button w3-black w3-round" id="btnclear" title="Remove contents from the Query and Response.">Clear</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <button onclick="document.getElementById('showsession').style.display='block'" class="w3-button">Session</button>
+  </div>
 </div>
-
-<br>
-
-<div id="divresults" class="w3-container w3-hover-shadow" hidden>
-<p>Results: </p><textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="llmorig" rows="4" cols="120"></textarea>
-
-<br>
-</div>
-
-<br>
-<div>
-<p>Status: <output id="status">Ready</output></p>
-</div>
-
-<br /><br /><br /><br />
-
-<div class="w3-container w3-hover-shadow w3-center">
-<hr />
-&nbsp;&nbsp;
-<button class="w3-button w3-blue" id="btninitllm" title="Initialize the LLM to prepare for processing.">Init LLM</button>
-&nbsp;&nbsp;&nbsp;&nbsp;
-<button class="w3-button w3-blue" id="btnstopllm" title="Shutdown currently running LLM.">Stop LLM</button>
-&nbsp;&nbsp;&nbsp;&nbsp;
-<button class="w3-button w3-blue" id="btnloadtest" title="Get a sample text line for processing.">Load Test Data</button>
-<hr />
-<h4 class="w3-right-align">Real or live sensitive information should NOT be used in this application.</h4>
 </div>
 
 
 </body>
 <script>
 
+$(document).ready(function() {
+      loadmodels()
+      loadpromptset()
+      getcurrllm()
+})
+
 
 $('#btnqry').on('click', function(e) {
+      if (document.getElementById("llm_models").value == "" ) { alert("Need to select and initialize an LLM"); return }
       if (document.getElementById("qrytxt").value == "") { alert("Need to enter a query"); return }
+       if (document.getElementById("llm_preprompts").value == "") { alert("Need to Select an Action "); return }
       document.getElementById("llmorig").value = ""
+      document.getElementById("output").textContent = ""
       document.getElementById("status").value = "WORKING"
-      runquery("")
-    })
-
-$('#btnqryexp').on('click', function(e) {
-      if (document.getElementById("qrytxt").value == "") { alert("Need to enter a query"); return }
-      document.getElementById("llmorig").value = ""
-      document.getElementById("status").value = "WORKING"
-      runquery("exp")
+      runquery()
     })
 
 $('#btnclear').on('click', function(e) {
+
       document.getElementById("qrytxt").value = ""  
       document.getElementById("llmorig").value = ""
+      document.getElementById("output").textContent = ""
       document.getElementById("divresults").hidden = true
       document.getElementById("status").value = "Ready"
     })   
 
+    // creates pretty print for json output
+$('#btnppres').on('click', function(e) {
+      transformJson("llmorig")
+    })   
+
        
     // following runs the query once user has selected criteria.
-    function runquery(ex) {
+    function runquery() {
       document.getElementById("divresults").hidden = true
       qrytxt = document.getElementById("qrytxt").value 
-      results = runprocajax(qrytxt,ex)
-    
+      llm = document.getElementById("llm_models").value
+      results = runprocajax(llm, qrytxt)
     }
 
 
- function runprocajax(qrytxt,ex) {
+ function runprocajax(llm,qrytxt) {
+  pp = document.getElementById("llm_preprompts").value
   results = []
   $.ajax({
     type:'POST',
     url: '/runquery',
-    data: {qrydata: qrytxt, explain:ex},
+    data: {llm: llm, qrydata: qrytxt, pp: pp},
     async: true,
     success: function(data){
       results = JSON.parse(data)
       finishquery(results)
+      getcurrllm()
+      transformJson('llmorig')
+      sessiontrack(document.getElementById('output').textContent);
       },
     error: function(error){
       console.log(JSON.stringify(error))
@@ -115,38 +182,27 @@ $('#btnclear').on('click', function(e) {
  
   function finishquery(results)  { 
       document.getElementById("llmorig").value = results[0]
+      document.getElementById("output").textContent = ""
       document.getElementById("divresults").hidden = false
       document.getElementById("status").value = "Run COMPLETED "
 
  }
 
-$('#btninitllm').on('click', function(e) {
+ //====================================================
+
+ $('#llm_models').on('change',function(e) {
+
     document.getElementById("status").value = "INITIALIZING LLM"
+    llm = document.getElementById("llm_models").value
     $.ajax({
     type:'POST',
     url: '/initllm',
-    data: {},
+    data: {llmsel:llm},
     async: true,
     success: function(data){
       results = JSON.parse(data)
       document.getElementById("status").value = "LLM Ready" 
-    },
-    error: function(error){
-      console.log(JSON.stringify(error))
-    }
-  }) 
-})
-
-$('#btnstopllm').on('click', function(e) {
-    document.getElementById("status").value = "STOPPING LLM"
-    $.ajax({
-    type:'POST',
-    url: '/stopllm',
-    data: {},
-    async: true,
-    success: function(data){
-      results = JSON.parse(data)
-      document.getElementById("status").value = "LLM Terminated" 
+      getcurrllm()
     },
     error: function(error){
       console.log(JSON.stringify(error))
@@ -171,6 +227,122 @@ $('#btnloadtest').on('click', function(e) {
 })
 
 
+//following loads LLM models to select list
+    function loadmodels() {
+      $('#llm_models').clearQueue()
+    $.ajax({
+        type:'POST',
+        url: '/loadmodels',
+        data: {},
+        async: true,
+        success: function(data){
+          dslist = JSON.parse(data);
+          for (i=0;i<dslist.length;i++) {
+            var option = new Option();
+            option.value = dslist[i]
+            option.text = dslist[i]
+            $('#llm_models').append(option);
+          }
+        
+        },
+        error: function(error){
+          console.log(JSON.stringify(error))
+        }
+      })
+
+    }
+    
+    pqry = [];
+    
+    // following loads prompts to llm_preprompts
+    function loadpromptset() {
+    $.ajax({
+        type:'POST',
+        url: '/loadprompts',
+        data: {},
+        async: true,
+        success: function(data){
+          dslist = JSON.parse(data);
+          for (i=0;i<dslist.length;i++) {
+            var option = new Option();
+            option.value = dslist[i][0]
+            option.text = dslist[i][1] 
+            pqry[i] = dslist[2][i]
+            $('#llm_preprompts').append(option);
+          }
+
+        },
+        error: function(error){
+          console.log(JSON.stringify(error))
+        }
+      })
+    }
+
+function getcurrllm() { 
+    $.ajax({
+        type:'GET',
+        url:  '/getcurrentllm',
+        data: {},
+        async: true,
+        success: function(data){
+          results = JSON.parse(data)
+          document.getElementById("llm_models").value = results
+          },
+        error: function(error){
+          console.log(JSON.stringify(error))
+        }
+      }) 
+    }
+
+// ==========================
  
+function jsonToFormattedText(obj, indent = 0) {
+  const spacing = '  '.repeat(indent);
+  let result = '';
+
+  for (const key in obj) {
+    const value = obj[key];
+    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+      result += `${spacing}${key}:\n${jsonToFormattedText(value, indent + 2)}`;
+    } else if (Array.isArray(value)) {
+      result += `${spacing}${key}: [${value.join(', ')}]\n`;
+    } else {
+      result += `${spacing}${key}: ${value}\n`;
+    }
+  }
+
+  
+  return result;
+}
+
+function transformJson(tbox) {
+  const input = document.getElementById(tbox).value;
+  const output = document.getElementById('output');
+
+  try {
+    const jsonObj = JSON.parse(input);
+    const formattedText = jsonToFormattedText(jsonObj);
+    output.textContent = formattedText ;
+  } catch (e) {
+    output.textContent = '❌ Invalid JSON. Please check your input.';
+  }
+}
+
+//==========================================
+// session tracking  -- provides local tracking for updates, etc.
+
+function sessiontrack(update) {
+  const ctime = new Date().toISOString();
+  divider = "\n\n=================================\n=================================\n\n"
+  curr = document.getElementById("sessbox").value
+  newupd = divider + ctime + "\n\n" + update + divider + curr
+  document.getElementById("sessbox").value = newupd
+
+}
+
+
+
+
+
 </script>
 </html>

@@ -1,9 +1,54 @@
 [
+    {"preprompt": {
+    "qryid": "ask",
+    "qrytype": "ask",
+    "qryname": "Ask Question",
+    "proctype": "line",
+    "system": {
+            "activity": "Provide a brief answer to the query, limit the response to the JSON output model.",
+            "output": {
+                "answer": "answer"
+                }
+        }
+    }
+},
+
+    {
+        "preprompt": {
+            "qryid": "def_simple",
+            "qrytype": "define",
+            "qryname": "Definition",
+            "proctype": "word",
+            "system": {
+                    "activity": "For the query, provide a definition, limit the response to the JSON output model.",
+                    "output": {
+                     "definition": "definition"
+                    }
+                }
+        }
+    },
+
+   {"preprompt": {
+    "qryid": "cat_animinveg",
+    "qrytype": "categorize",
+    "qryname": "Animal, Mineral, Vegetable Categorization",
+    "proctype": "word",
+    "system": {
+            "activity": "Categorize each query as one of the suggested categories.  Limit the response to the JSON output model.",
+            "categories": ["animal", "mineral","vegetable","other"],
+            "output": {
+                "results": "category"
+                }
+        }
+    }
+},
+
 {
     "preprompt": {
         "qryid": "class_milintel",
         "qrytype": "classification",
         "qryname": "Military Intel Classification",
+        "proctype": "line",
         "system": {
                "classification_type": [
                     {"Top Secret": "Information that could cause exceptionally grave damage to national security if disclosed without authorization."},
@@ -30,12 +75,14 @@
                     }
                 }
         }
-},
+    },
+
     {
         "preprompt": {
             "qryid": "class_milwexpl",
             "qrytype": "classification",
             "qryname": "Military Intel Classification with Explanation",
+            "proctype": "line",
             "system": {
                "classification_type": [
                     {"Top Secret": "Information that could cause exceptionally grave damage to national security if disclosed without authorization."},
@@ -63,5 +110,173 @@
                         }
                     }
             }
+    },
+
+    {
+        "preprompt": {
+            "qryid": "corr_latlong",
+            "qrytype": "correlate",
+            "qryname": "Provide Lat Long for Locations",
+            "proctype": "word",
+            "system": {
+                    "activity": "For each location query, provide a latitude and longitude, limit the response to the JSON output model.",
+                    "output": {
+                        "latitude": "latitude value",
+                        "longitude": "longitude value"
+                        }
+                }
+        }
+    },
+
+    {
+        "preprompt": {
+            "qryid": "eval_sent",
+            "qrytype": "evaluate",
+            "qryname": "Sentiment Evaluation",
+            "proctype": "line",
+            "system": {
+                    "activity": "Evaluate the query to identify the sentiment from the category of the query, limit the response to the JSON output model.",
+                    "category": [
+                        "negative", 
+                        "positive", 
+                        "uncertainty", 
+                        "litigious", 
+                        "strong modal", 
+                        "weak modal", 
+                        "constraining"
+                    ],
+                    "output": {
+                        "evaluated": "sentiment from category"
+                        }
+                }
+        }
+    },
+
+    {
+        "preprompt": {
+            "qryid": "ext_keywords",
+            "qrytype": "extraction",
+            "qryname": "Keyword Extraction",
+            "proctype": "doc",
+            "system": {
+                    "activity": "You are extracting key words based on categories.  Extract separate lists of key words based on provided categories.  Limit response to the output format.",
+                    "category": ["keywords", "locations", "proper names"],
+                    "output": {
+                        "keywords": ["extracted keywords"]
+                        }
+                }
+        }
+    },
+
+    {
+        "preprompt": {
+            "qryid": "sum_docs",
+            "qrytype": "summarize",
+            "qryname": "Summarizing Document Content",
+            "proctype": "doc",
+            "system": {
+                    "activity": "Provide a summary for the query, limit the response to the JSON output model.",
+                    "output": {
+                        "summary": "summary"
+                        }
+                    }
+        }
+    },
+
+    {
+        "preprompt": {
+            "qryid": "eval_coa",
+            "qrytype": "evaluate",
+            "qryname": "Evaluating courses of action",
+            "proctype": "line",
+            "system": {
+                "activity": "From the criteria, evaluate and identify 3 courses of action (coa) for various political and military situations, limit the response to the JSON output model.",
+                    "criteria": {
+                            "Diplomatic Courses of Action": [
+                                "Negotiations and Diplomacy",
+                                "Diplomatic Pressure ",
+                                "Coalition Building ",
+                                "Sanctions or Diplomatic Isolation "
+                            ],
+                            "Economic Courses of Action ": [
+                                "Sanctions ",
+                                "Aid and Economic Assistance ",
+                                "Trade Agreements or Tariffs ",
+                                "Foreign Investment Restrictions "
+                            ],
+                            "Military Courses of Action ": [
+                                "Military Deterrence ",
+                                "Use of Force ",
+                                "Military Assistance ",
+                                "Counterterrorism Operations "
+                            ],
+                            "Intelligence and Cyber Courses of Action ": [
+                                "Intelligence Collection ",
+                                "Cyber Operations ",
+                                "Counterintelligence Measures "
+                            ],
+                            "Public Diplomacy and Information Campaigns ": [
+                                "Information Campaigns ",
+                                "Cultural Diplomacy ",
+                                "Soft Power Initiatives "
+                            ],
+                            "Humanitarian and Developmental Courses of Action ": [
+                                "Humanitarian Aid ",
+                                "Development Assistance ",
+                                "Refugee Support and Resettlement "
+                            ],
+                            "Legal and Institutional Courses of Action ": [
+                                "Engaging in Multilateral Treaties or Agreements ",
+                                "Supporting International Law and Human Rights ",
+                                "Multilateral Governance "
+                            ],
+                            "Strategic Patience and Non-Intervention ": [
+                                "Strategic Patience ",
+                                "De-Escalation and Conflict Avoidance "
+                            ],
+                            "Moral or Ethical Stance ": [
+                                "Human Rights Advocacy ",
+                                "Leading by Example "
+                            ]
+                        },
+                        "output": {
+                            "recommendations ": [
+                                {
+                                 "coa1": "from coa_options  ",
+                                 "coa2": "from coa_options  ",
+                                 "coa3 ": "from coa_options  "
+                                    }
+                            ]
+                    }
+                }
+           }
+    },
+
+    {
+        "preprompt": {
+            "qryid": "assess_trl",
+            "qrytype": "assess",
+            "qryname": "Evaluating TRLs",
+            "proctype": "word",
+            "system": {
+                "activity": "From the criteria, assess and determine the highest Technology Readiness Level (TRL), limit the response to the JSON output model.",
+                "criteria": {
+                                "TRL1": "TRL 1.  component basic principles are speculated",
+                                "TRL2":  "TRL 2.  component technology as an application is formulated",
+                                "TRL3": "TRL 3.  component proof of concept understood and established",
+                                "TRL4": "TRL 4.  some component features are demonstrated in laboratory",
+                                "TRL5": "TRL 5.  prototype component is demonstrated in the laboratory",
+                                "TRL6":  "TRL 6.  component has been demonstrated in a relevant operational environment",
+                                "TRL7": "TRL 7.  component is operational in actual operational environment",
+                                "TRL8": "TRL 8.  component passes extensive validation in a real world environment",
+                                "TRL9":  "TRL 9.  component is deployed and shown successful in multiple operational environments",
+                                "NONE": "No TRL can be assigned."
+                            },
+                        "output": {
+                            "TRL ": "TRL from criteria list",
+                            "reason ": "explain why the TRL value was assigned "
+                        }
+            }
+        }
     }
 ]

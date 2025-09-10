@@ -1,24 +1,16 @@
-## AzzieClassifier
+## AzzieL3MTools
 ## runl3m.py
 ## Hillman
 ## Jun 2025
 
 import ollama
 import json
+import parse
+import utils
+import llmproc
 
 ## provides execution for query processing via the LLM
 
-## file handling functions  follow (housekeeping)
-keep_alive = "30m"
-
-def loadjson(fname):
-    with open(fname, 'r', encoding='utf-8') as file:
-        data = json.load(file)
-    return data
-
-def loadtext (fname):
-    with open(fname,"r") as file:
-        return file.read()
 
 ## execution functions follow
 
@@ -42,7 +34,7 @@ def execllm(model,qrun, llmoptions,llmsystem):
 
 ## following gets the preprompt from the pp file
 def getpreprompt(pp):
-    pplist = loadjson("config/llmprompts.json")
+    pplist = utils.loadjson("config/llmprompts.json")
     # fnd = False
     ipp = {"preprompt": {}}
     for i in pplist:
@@ -52,20 +44,51 @@ def getpreprompt(pp):
 
 ## primary function for running the LLM
 
-def runquery(llmsel, qry,exp):
+def runquery(llmsel, qry, pp):
     global keep_alive
-    model = "hermes3:latest"
-    pp = "class_milintel"
-    if exp != "": pp = "class_milwexpl"
+    print(pp)
+    model = llmproc.getcurrentllm()[0]["model"]
 
     llmoptions = llmsel["llm"]["setup"] 
     keep_alive = llmsel["llm"]["keep_alive"]
     
-    pp = getpreprompt(pp)
-    llmsystem = pp["preprompt"]["system"]
+    fpp = getpreprompt(pp)
+    llmsystem = fpp
 
-    results = execllm(model,qry, llmoptions,llmsystem)
-    return results
+    # results = execllm(model,qry, llmoptions,llmsystem)
+    results = []
+    
+ 
+    if fpp["preprompt"]["proctype"] == "word":
+        wordlist = parse.parse_to_wordlist(qry)
+        print("run multiple, word")
+        for i in wordlist:
+            print(i)
+            qrun = {}
+            qrun["QUERY"] = i
+            qrun["RESULTS"] = json.loads(execllm(model,i, llmoptions,llmsystem))
+            results.append(qrun)
+        return json.dumps(results,indent=4)
+    elif fpp["preprompt"]["proctype"] == "line":
+        qrylist = parse.runsentparsetolist(qry)
+        print("run multiple, line")
+        for i in qrylist:
+            print(i)
+            qrun = {}
+            qrun["QUERY"] = i
+            qrun["RESULTS"] = json.loads(execllm(model,i, llmoptions,llmsystem))
+            results.append(qrun)
+        return json.dumps(results,indent=4)
+    elif fpp["preprompt"]["proctype"] == "doc":
+        print("run document ")
+        # for i in qrylist:
+        print(qry)
+        qrun = {}
+        qrun["QUERY"] = qry
+        qrun["RESULTS"] = json.loads(execllm(model,qry, llmoptions,llmsystem))
+        results.append(qrun)
+        return json.dumps(results,indent=4)
+
 
 
 

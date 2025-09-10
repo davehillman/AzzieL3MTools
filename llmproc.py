@@ -1,11 +1,11 @@
-## AzzieClassifier
+## AzzieL3MTools
 ## llmproc.py
 ## Hillman
 ## Jun 2025
 
 import ollama
 from datetime import datetime
-import runl3m
+import utils
 
 ## following loads the LLM data
 llmfile = "llminit.json"
@@ -13,7 +13,7 @@ llmfile = "llminit.json"
 def initllm():
     global llmfile
     timestart = datetime.now()
-    llmsel = runl3m.loadjson(llmfile)
+    llmsel = utils.loadjson(llmfile)
 
     print("==>LLM Init Time: " + str(datetime.now() - timestart))
     return llmsel    
@@ -39,6 +39,12 @@ def llmstop():
     else:
         print("No LLM is running.")
 
+def getllmlist():
+    lset= []
+    lmlist = ollama.list()["models"]
+    for i in lmlist:
+        lset.append(i['model'])
+    return lset 
 
 
 def getcurrentllm():
@@ -49,7 +55,7 @@ def getcurrentllm():
 
 def startllm(model,llmtime="30m"):
     try:
-        print(llmtime)
+        print("Starting: " + model + " for " + llmtime)
         
         ollama.chat(model=model,keep_alive=llmtime,   messages=[
                 {"role":"system",
@@ -70,7 +76,14 @@ def stopllm(model):
     return
 
 
-
-
+## use following when you want to stop all then run
+def setllmrun(llm,kill=True):
+    lset = getcurrentllm()
+    for i in lset:
+        stopllm(i["model"])
+    if llm != "": 
+        print(startllm(llm))
+    else:
+        print("ALL LLMs are stopped")
 
 
