@@ -1,7 +1,7 @@
 ## AzzieL3MTools
 ## runl3m.py
 ## Hillman
-## Jun 2025
+## Sep 2025
 
 import ollama
 import json

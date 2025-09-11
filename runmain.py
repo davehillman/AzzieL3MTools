@@ -1,7 +1,7 @@
 ## AzzieL3MTools
 ## runmain.py
 ## Hillman
-## June 2025
+## Sep 2025
 
 import runl3m
 import llmproc

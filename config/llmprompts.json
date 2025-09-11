@@ -261,20 +261,20 @@
             "system": {
                 "activity": "From the criteria, assess and determine the highest Technology Readiness Level (TRL), limit the response to the JSON output model.",
                 "criteria": {
-                                "TRL1": "TRL 1.  component basic principles are speculated",
-                                "TRL2":  "TRL 2.  component technology as an application is formulated",
-                                "TRL3": "TRL 3.  component proof of concept understood and established",
-                                "TRL4": "TRL 4.  some component features are demonstrated in laboratory",
-                                "TRL5": "TRL 5.  prototype component is demonstrated in the laboratory",
-                                "TRL6":  "TRL 6.  component has been demonstrated in a relevant operational environment",
-                                "TRL7": "TRL 7.  component is operational in actual operational environment",
-                                "TRL8": "TRL 8.  component passes extensive validation in a real world environment",
-                                "TRL9":  "TRL 9.  component is deployed and shown successful in multiple operational environments",
+                                "TRL1": "TRL 1:  component basic principles are speculated; not implemented",
+                                "TRL2":  "TRL 2:  component technology concepts and ideas  as an application are formulated",
+                                "TRL3": "TRL 3:  limited component proof of concept understood and established",
+                                "TRL4": "TRL 4:  very limited set of component features can be demonstrated in laboratory",
+                                "TRL5": "TRL 5:  prototype component is demonstrated in the laboratory",
+                                "TRL6":  "TRL 6:  component has been operated or used in a relevant operational environment",
+                                "TRL7": "TRL 7:  component is operating in a real-world environment",
+                                "TRL8": "TRL 8.  component has been deployed in a real world operational environment",
+                                "TRL9":  "TRL 9:  component is successfully and widely deployed in multiple operational environments",
                                 "NONE": "No TRL can be assigned."
                             },
                         "output": {
                             "TRL ": "TRL from criteria list",
-                            "reason ": "explain why the TRL value was assigned "
+                            "reason ": "explain the reason the selected TRL value was assigned "
                         }
             }
         }
