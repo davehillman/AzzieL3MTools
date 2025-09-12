@@ -2,7 +2,7 @@
     {"preprompt": {
     "qryid": "ask",
     "qrytype": "ask",
-    "qryname": "Ask Question",
+    "qryname": "Ask Question (general query)",
     "proctype": "line",
     "system": {
             "activity": "Provide a brief answer to the query, limit the response to the JSON output model.",
@@ -13,6 +13,19 @@
     }
 },
 
+   {"preprompt": {
+    "qryid": "provide",
+    "qrytype": "list",
+    "qryname": "Provide a list of related terms.",
+    "proctype": "word",
+    "system": {
+            "activity": "Provide a list of terms related to the query, limit the response to the JSON output model.",
+            "output": {
+                "term": ["related terms"]
+                }
+        }
+    }
+},
     {
         "preprompt": {
             "qryid": "def_simple",
@@ -172,7 +185,7 @@
         "preprompt": {
             "qryid": "sum_docs",
             "qrytype": "summarize",
-            "qryname": "Summarizing Document Content",
+            "qryname": "Summarize Document Content",
             "proctype": "doc",
             "system": {
                     "activity": "Provide a summary for the query, limit the response to the JSON output model.",
@@ -187,10 +200,10 @@
         "preprompt": {
             "qryid": "eval_coa",
             "qrytype": "evaluate",
-            "qryname": "Evaluating courses of action",
+            "qryname": "Assess Courses of Action (COA)",
             "proctype": "line",
             "system": {
-                "activity": "From the criteria, evaluate and identify 3 courses of action (coa) for various political and military situations, limit the response to the JSON output model.",
+                "activity": "From the criteria, evaluate and prioritize 3 Courses of Action (COA) for various political and military situations, limit the response to the JSON output model.",
                     "criteria": {
                             "Diplomatic Courses of Action": [
                                 "Negotiations and Diplomacy",
@@ -242,9 +255,9 @@
                         "output": {
                             "recommendations ": [
                                 {
-                                 "coa1": "from coa_options  ",
-                                 "coa2": "from coa_options  ",
-                                 "coa3 ": "from coa_options  "
+                                 "COA 1": "from coa_options  ",
+                                 "COA 2": "from coa_options  ",
+                                 "COA 3 ": "from coa_options  "
                                     }
                             ]
                     }

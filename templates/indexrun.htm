@@ -1,4 +1,4 @@
-<!-- AzzieL3MTools, indexrun.htm, D. Hillman, Jun 2025 -->
+<!-- AzzieL3MTools, indexrun.htm, D. Hillman, SEP 2025 -->
 <html>
     <head>
         <title>Azzie L3M Tools</title>
@@ -296,24 +296,33 @@ function getcurrllm() {
 
 // ==========================
  
-function jsonToFormattedText(obj, indent = 0) {
-  const spacing = '  '.repeat(indent);
-  let result = '';
 
-  for (const key in obj) {
-    const value = obj[key];
-    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-      result += `${spacing}${key}:\n${jsonToFormattedText(value, indent + 2)}`;
-    } else if (Array.isArray(value)) {
-      result += `${spacing}${key}: [${value.join(', ')}]\n`;
-    } else {
-      result += `${spacing}${key}: ${value}\n`;
-    }
+function jsonToFormattedText(obj, indent = 0) {
+  let result = "";
+  const padding = "  ".repeat(indent); // 2-space indentation
+
+  if (Array.isArray(obj)) {
+    obj.forEach((item, index) => {
+      result += `${padding}[${index + 1}]:\n`;
+      result += jsonToFormattedText(item, indent + 1);
+    });
+  } else if (typeof obj === "object" && obj !== null) {
+    Object.keys(obj).forEach(key => {
+      let value = obj[key];
+      if (typeof value === "object" && value !== null) {
+        result += `${padding}${key}:\n`;
+        result += jsonToFormattedText(value, indent + 1);
+      } else {
+        result += `${padding}${key}: ${value}\n`;
+      }
+    });
+  } else {
+    result += `${padding}${obj}\n`;
   }
 
-  
   return result;
 }
+
 
 function transformJson(tbox) {
   const input = document.getElementById(tbox).value;
@@ -323,7 +332,8 @@ function transformJson(tbox) {
     const jsonObj = JSON.parse(input);
     const formattedText = jsonToFormattedText(jsonObj);
     output.textContent = formattedText ;
-  } catch (e) {
+  }
+   catch (e) {
     output.textContent = '❌ Invalid JSON. Please check your input.';
   }
 }
