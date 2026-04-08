@@ -1,0 +1,471 @@
+<!-- AzzieL3MTools, indexllmeval.htm, D. Hillman, Feb 2026 -->
+<html>
+    <head>
+        <title>Azzie L3M Tools</title>
+        <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
+
+        <link href="{{url_for('static',filename='css/w3.css')}}" rel="stylesheet">
+        <link href="{{url_for('static',filename='css/background.css')}}" rel="stylesheet">
+
+<style>
+    html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif; padding: 3px;}
+    </style>
+
+
+
+    </head>
+  
+  <body class="w3-flat-belize-hole">
+  
+  <div class="w3-container  w3-hover-shadow w3-round w3-black">
+    <div class="w3-bar">
+ 
+      <div class="w3-container w3-xlarge">
+        L3M Tools: LLM/Batch Management
+      </div>
+
+      <div class="w3-container w3-small">   
+        <p>
+          <a style="text-decoration: none; color: inherit;" href="/"> Run L3M Eval </a>
+          &nbsp;&nbsp;&nbsp;
+          <a style="text-decoration: none; color: inherit;" href="/indexllmeval"> LLM/Batch Management </a>
+        </p>
+      </div>
+    </div>
+</div>
+
+    <br>
+
+    <div class="w3-container w3-hover-shadow w3-round">
+
+      <div w3-text-black style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        VIEW:
+        <select class="w3-input w3-light-blue w3-text-black w3-round w3-small" style="width:20%" id="llm_models" title="Select an LLM">
+          <option value="">LLM Models...</option>
+        </select> 
+
+        &nbsp;&nbsp;
+        <select class="w3-input w3-light-blue w3-text-black w3-round w3-small" style="width:15%" id="llm_settings" title="Select an LLM Setting">
+          <option value="">LLM Settings...</option>
+        </select>    
+
+        &nbsp;&nbsp;
+          <select class="w3-input w3-light-blue w3-text-black w3-round w3-small" style="width:20%"  id="llm_preprompts" title="Select an Prompt">
+            <option value="">Prompts...</option>
+          </select>
+          
+            &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        <select class="w3-input w3-light-blue w3-text-black w3-round w3-small" style="width:15%" id="batchresults">
+          <option value="">Batch Results...</option>
+        </select> 
+
+
+      </div> 
+
+
+      <div w3-text-black style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        Edit: &nbsp;
+        <select class="w3-input w3-light-blue w3-text-black w3-round w3-small" style="width:20%" id="editlist" title="Select to Edit">
+          <option value="">Settings...</option>
+          <option value="llminit.json">LLMs</option>
+          <option value="llmprompts.json">Preprompts</option>
+        </select> 
+        <button class="w3-button w3-blue w3-round w3-small" disabled id="btnsavelistdata">SAVE Setting</button>
+      &nbsp;&nbsp;&nbsp;
+       
+        <select class="w3-input w3-light-blue w3-text-black w3-round w3-small" style="width:20%" id="batchfiles">
+          <option value="">Batch Files...</option>
+        </select>  
+        &nbsp;&nbsp;
+      <button class="w3-button w3-blue w3-round w3-small" disabled id="btnsavebatchfile">SAVE Batch</button>
+      &nbsp;&nbsp;
+      <button class="w3-button w3-blue w3-round w3-small" disabled id="btnrunbatch">RUN Batch</button>
+ 
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="w3-button w3-blue w3-round w3-small" id="btnclearbox">Clear</button>
+
+      </div>
+    <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="infotxt" rows="15" style="width:90%" ></textarea>
+<br>
+  </div>
+<br>
+
+
+</div>
+
+<br>
+
+<br>
+</div>
+
+
+
+<div class="w3-container w3-bottom  w3-hover-shadow w3-round w3-black w3-small">
+<div class="w3-bar">
+  <div class="w3-left">
+    <p class="w3-left">Status: <output id="status"  >Ready</output></p>
+  </div>
+
+
+</div>
+</div>
+
+
+</body>
+        
+
+<script>
+
+$(document).ready(function() {
+      loadmodels()
+      loadsettings()
+      loadpromptset()
+      loadbatchfiles()
+      loadbatchresults()
+})
+
+
+    // creates pretty print for json output
+// $('#btnppres').on('click', function(e) {
+//       transformJson("llmorig")
+//     })   
+
+
+// following is a single point AJAX call
+
+function ajrun(urlcall, typecall, params,outfun) { 
+    $.ajax({
+        type: typecall,
+        url:  urlcall,
+        data: params,
+        async: true,
+        success: function(data){
+          results = JSON.parse(data)
+          if (outfun != "") outfun(results)
+          },
+        error: function(error){
+          console.log(JSON.stringify(error))
+        }
+      }) 
+    }
+
+ 
+
+
+ //====================================================
+
+
+ $('#llm_testres').on('change',function(e) {
+    clearall()
+    llm = document.getElementById("llm_testres").value
+    ajrun('/getllmdata', 'POST',{llmsel:llm},showtest)
+})
+
+ $('#batchlist').on('change',function(e) {
+    clearall()
+    bfile = document.getElementById("batchlist").value
+    ajrun('/getbatchfile', 'POST',{bfile:bfile},showtest)
+})
+
+
+function showtest(results) {
+  document.getElementById("infobox").value = results
+}
+
+
+$('#btnloadtest').on('click', function(e) {
+  clearall()
+  pp = document.getElementById("llm_preprompts").value
+  ajrun('/loadtest','POST',{pp:pp},finloadtest)
+})
+
+function finloadtest(results) {
+ document.getElementById("qrytxt").value = results
+}
+
+$('#llm_models').on('change',function(e) {
+  clearall()
+  mname = document.getElementById("llm_models").value
+  ajrun('/getllmdata','POST',{mname:mname},fingetmodeldata)
+})
+
+function fingetmodeldata(results) {
+  document.getElementById("infotxt").value = JSON.stringify(results, null, 2);
+}
+
+$('#llm_testres').on('change',function(e) {
+  mname = document.getElementById("llm_testres").value
+  ajrun('/getllmtestres','POST',{mname:mname},fingettestres)
+})
+
+function fingettestres(results) {
+  document.getElementById("infotxt").value = JSON.stringify(results, null, 2);
+}
+
+
+$('#llm_settings').on('change',function(e) {
+  clearall()
+  mname = document.getElementById("llm_settings").value
+  ajrun('/getsettingsdata','POST',{mname:mname},fingetsettingsdata)
+})
+
+
+function fingetsettingsdata(results) {
+  document.getElementById("infotxt").value = JSON.stringify(results, null, 2);
+}
+
+$('#llm_preprompts').on('change',function(e) {
+  clearall()
+  mname = document.getElementById("llm_preprompts").value
+  ajrun('/getpromptdata','POST',{mname:mname},fingetpromptdata)
+})
+
+function fingetpromptdata(results) {
+  document.getElementById("infotxt").value = JSON.stringify(results,null,2)
+}
+
+
+
+//following loads LLM models to select list
+function loadmodels() {
+  clearall()
+  $('#llm_models').clearQueue()
+  $('#llminfolist').clearQueue()
+  ajrun('/loadmodels','POST',{},finloadmodels)
+}
+    
+function finloadmodels(results) {
+          dslist = results
+          for (i=0;i<dslist.length;i++) {
+            var option = new Option();
+            option.value = dslist[i]["model"].trim()
+            option.text = dslist[i]["details"].trim()
+            $('#llm_models').append(option);
+          }
+          for (i=0;i<dslist.length;i++) {
+            var option = new Option();
+            option.value = dslist[i]["model"].trim()
+            option.text = dslist[i]["details"].trim()
+            $('#llminfolist').append(option);
+          }
+}
+
+function loadbatchfiles() {
+      // $('#llm_testres').clearQueue()
+      // $('#llminfolist').clearQueue()
+      clearall()
+      ajrun('/loadbatchfiles','POST',{},finloadbatchfiles)
+}
+    
+function finloadbatchfiles(results) {
+          dslist = results
+          for (i=0;i<dslist.length;i++) {
+            var option = new Option();
+            option.value = "batch/" + dslist[i].trim()
+            option.text = dslist[i]
+            $('#batchfiles').append(option);
+          }
+}
+
+function loadbatchresults() {
+      // $('#llm_testres').clearQueue()
+      // $('#llminfolist').clearQueue()
+      select = document.getElementById("batchresults")
+      while (select.options.length > 1) {
+          select.remove(1);
+      }
+      ajrun('/loadbatchresults','POST',{},finloadbatchresults)
+}
+    
+function finloadbatchresults(results) {
+          dslist = results
+          for (i=0;i<dslist.length;i++) {
+            var option = new Option();
+            option.value = "batchres/" + dslist[i].trim()
+            option.text = dslist[i]
+            $('#batchresults').append(option);
+          }
+}
+
+
+function loadsettings() {
+  clearall()
+  $('#llm_settings').clearQueue()
+  ajrun('/loadsettings','POST',{},finloadsettings)
+
+}
+
+function finloadsettings(results) {
+          dslist = results
+          for (i=0;i<dslist.length;i++) {
+            var option = new Option();
+            option.value = dslist[i].trim()
+            option.text = dslist[i].trim()
+            $('#llm_settings').append(option);
+          }
+}
+
+pqry = [];
+    
+    // following loads prompts to llm_preprompts
+function loadpromptset() {
+  clearall()
+  ajrun('/loadprompts','POST',{},finloadpromptset)
+}
+
+function finloadpromptset(results)  {
+  dslist = results
+  for (i=0;i<dslist.length;i++) {
+            var option = new Option();
+            option.value = dslist[i][0]
+            option.text = dslist[i][1] 
+            pqry[i] = dslist[2][i] 
+            $('#llm_preprompts').append(option);
+  }
+  getcurrllm()
+}
+
+
+function getcurrllm() { 
+  clearall()
+  ajrun('/getcurrentllm','GET',{},fingetcurrllm)
+}
+
+function fingetcurrllm (results) {
+  clearall()
+  document.getElementById("llm_models").value = results
+}
+
+// ==========================
+ 
+function jsonToFormattedText(obj, indent = 0) {
+  let result = "";
+  const padding = "  ".repeat(indent); // 2-space indentation
+
+  if (Array.isArray(obj)) {
+    obj.forEach((item, index) => {
+      result += `${padding}[${index + 1}]:\n`;
+      result += jsonToFormattedText(item, indent + 1);
+    });
+  } else if (typeof obj === "object" && obj !== null) {
+    Object.keys(obj).forEach(key => {
+      let value = obj[key];
+      if (typeof value === "object" && value !== null) {
+        result += `${padding}${key}:\n`;
+        result += jsonToFormattedText(value, indent + 1);
+      } else {
+        result += `${padding}${key}: ${value}\n`;
+      }
+    });
+  } else {
+    result += `${padding}${obj}\n`;
+  }
+
+  return result;
+}
+
+
+function transformJson(tbox) {
+  const input = document.getElementById(tbox).value;
+  const output = document.getElementById('output');
+
+  try {
+    const jsonObj = JSON.parse(input);
+    const formattedText = jsonToFormattedText(jsonObj);
+    output.textContent = formattedText ;
+  }
+   catch (e) {
+    output.textContent = '❌ Invalid JSON. Please check your input.';
+  }
+}
+
+//==========================================
+
+
+$('#editlist').on('change', function(e) {
+  edititem = document.getElementById("editlist").value
+  clearall()
+  ajrun('/loadedititem','POST',{edititem:edititem},loadeditsettings)
+  document.getElementById("btnsavelistdata").disabled = false;
+
+})
+
+$('#btnsavelistdata').on('click',function(e) {
+    edititem = document.getElementById("editlist").value
+    setdata = document.getElementById("infotxt").value
+    ajrun('/saveeditsettings','POST',{edititem:edititem, setdata:setdata},"")
+    document.getElementById("btnsavelistdata").disabled = true;
+})
+
+$('#btnsavebatchfile').on('click',function(e) {
+    edititem = document.getElementById("batchfiles").value
+    setdata = document.getElementById("infotxt").value
+    ajrun('/savebatchfile','POST',{edititem:edititem, setdata:setdata},"")
+    document.getElementById("btnsavebatchfile").disabled = true;
+})
+
+$('#btnrunbatch').on('click',function(e) {
+    document.getElementById("btnsavebatchfile").disabled = true;
+    edititem = document.getElementById("batchfiles").value
+    document.getElementById("status").value = "Running Batch: " + edititem
+    ajrun('/runbatch','POST',{edititem:edititem},finishBatch)
+
+})
+
+function finishBatch(results) {
+  document.getElementById("status").value = results
+  document.getElementById("infotxt").value = results
+  loadbatchresults()
+}
+
+
+$('#batchfiles').on('change', function(e) {
+  clearall()
+  edititem = document.getElementById("batchfiles").value
+  ajrun('/loadbatchfile','POST',{edititem:edititem},loadeditsettings)
+  document.getElementById("btnsavebatchfile").disabled = false;
+  document.getElementById("btnrunbatch").disabled = false;
+
+})
+
+$('#batchresults').on('change', function(e) {
+  edititem = document.getElementById("batchresults").value
+  clearall()
+  ajrun('/loadbatchresultsfile','POST',{edititem:edititem},loadeditsettings)
+
+})
+
+function loadeditsettings(results) {
+  document.getElementById("infotxt").value = JSON.stringify(results,null,2)
+
+}
+
+
+
+
+
+
+$('#btnclearbox').on('click',function(e) {
+  clearall()
+
+})
+
+
+
+
+// function loadllmtestsettings(results) {
+//   document.getElementById("infotxt").value = JSON.stringify(results,null,2)
+// }
+
+function clearall() {
+  document.getElementById("infotxt").value = ""
+  document.getElementById("btnsavelistdata").disabled = true;
+  // document.getElementById("editlist").value = ""
+  document.getElementById("btnsavebatchfile").disabled = true;
+
+}
+
+
+</script>
+</html>

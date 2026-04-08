@@ -1,0 +1,59 @@
+{
+  "llmsettings": [
+    {
+      "llmconfig": "Baseline",
+      "keep_alive": "30m",
+      "setup": {
+        "role": "system",
+        "temperature": 0.7,
+        "format": "json",
+        "seed": 42,
+        "num_ctx": 1024
+      }
+    },
+    {
+      "llmconfig": "Low Temp",
+      "keep_alive": "30m",
+      "setup": {
+        "role": "system",
+        "temperature": 0.2,
+        "format": "json",
+        "seed": 42,
+        "num_ctx": 1024
+      }
+    },
+    {
+      "llmconfig": "Moderate Temperature",
+      "keep_alive": "30m",
+      "setup": {
+        "role": "system",
+        "temperature": 0.3,
+        "format": "json",
+        "seed": 42,
+        "num_ctx": 1024
+      }
+    },
+    {
+      "llmconfig": "High Tokens",
+      "keep_alive": "30m",
+      "setup": {
+        "role": "system",
+        "temperature": 0.3,
+        "format": "json",
+        "seed": 42,
+        "num_ctx": 4096
+      }
+    },
+    {
+      "llmconfig": "Very Large Tokens",
+      "keep_alive": "60m",
+      "setup": {
+        "role": "system",
+        "temperature": 0.3,
+        "format": "json",
+        "seed": 42,
+        "num_ctx": 12288
+      }
+    }
+  ]
+}

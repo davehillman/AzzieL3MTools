@@ -208,21 +208,6 @@
   },
   {
     "preprompt": {
-      "qryid": "sum_docs_detailedtech",
-      "qrytype": "summarize",
-      "qryname": "Detailed Technical Summary",
-      "proctype": "doc",
-      "system": {
-        "job": "You are providing a summary of technical information.",
-        "activity": "Provide a detailed summary for the input, include key general details and specific details for clarity.  Limit the response to the JSON output model.",
-        "output": {
-          "summary": "summary"
-        }
-      }
-    }
-  },
-  {
-    "preprompt": {
       "qryid": "sum_short",
       "qrytype": "summarize",
       "qryname": "Short Summary of Document Content",

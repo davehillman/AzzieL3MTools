@@ -1,0 +1,1362 @@
+[
+  {
+    "platform": {
+      "cpu_name": "Intel64 Family 6 Model 186 Stepping 3, GenuineIntel",
+      "cpu_cores_physical": 10,
+      "cpu_cores_logical": 12,
+      "cpu_freq_mhz": 1700.0,
+      "ram_total_gb": 31.69,
+      "ram_available_gb": 19.14,
+      "os": "Windows",
+      "os_version": "10.0.26200"
+    }
+  },
+  {
+    "instruction_set": {
+      "ask": {
+        "preprompt": {
+          "qryid": "ask",
+          "qrytype": "ask",
+          "qryname": "Ask Question (general query)",
+          "proctype": "doc",
+          "system": {
+            "job": "You are answering questions.",
+            "activity": "Provide an answer to the question. If you do not have an answer, return 'I do not know about this'.  Limit the answer only to the JSON output model.",
+            "output": {
+              "answer": "answer"
+            }
+          }
+        }
+      },
+      "related_terms": {
+        "preprompt": {
+          "qryid": "related_terms",
+          "qrytype": "list",
+          "qryname": "Provide a list of related terms.",
+          "proctype": "word",
+          "system": {
+            "job": "You are creating lists of related terms.",
+            "activity": "Provide a list of 10 words or short phrases related to the query.  Limit the response to the list in the JSON output model.",
+            "output": {
+              "term": [
+                "related terms"
+              ]
+            }
+          }
+        }
+      },
+      "def_simple": {
+        "preprompt": {
+          "qryid": "def_simple",
+          "qrytype": "define",
+          "qryname": "Definition",
+          "proctype": "word",
+          "system": {
+            "job": "You are providing definitions.",
+            "activity": "Provide a succinct definition for a term or expression. If a term cannot be defined, respond with 'no definition available'.  Limit the response to the JSON output model.",
+            "output": {
+              "term": "each term",
+              "definition": "definition"
+            }
+          }
+        }
+      },
+      "cat_animinveg": {
+        "preprompt": {
+          "qryid": "cat_animinveg",
+          "qrytype": "categorize",
+          "qryname": "Animal, Mineral, Vegetable Categorization",
+          "proctype": "word",
+          "system": {
+            "job": "You are categorizing things into a specified set of categories.",
+            "activity": "Categorize each term as one of the suggested categories.  Limit the response to the JSON output model.",
+            "categories": [
+              "animal",
+              "mineral",
+              "vegetable",
+              "other"
+            ],
+            "output": {
+              "results": "category"
+            }
+          }
+        }
+      },
+      "class_milintel": {
+        "preprompt": {
+          "qryid": "class_milintel",
+          "qrytype": "classification",
+          "qryname": "Military Intel Classification",
+          "proctype": "line",
+          "system": {
+            "classification_type": [
+              {
+                "Top Secret": "Information that could cause exceptionally grave damage to national security if disclosed without authorization."
+              },
+              {
+                "Secret": "Information that could cause serious damage to national security if disclosed without authorization."
+              },
+              {
+                "Confidential": "Information that could cause damage to national security if disclosed without authorization."
+              },
+              {
+                "Unclassified": "Information that does not require protection against unauthorized disclosure. It may still be subject to access restrictions for other reasons."
+              }
+            ],
+            "classification_category": [
+              "Plans and Operations",
+              "Foreign Governments",
+              "Intel Assessment",
+              "Foreign Intelligence",
+              "Science and Technology",
+              "Nuclear",
+              "Vulnerabilities",
+              "Weapons of Mass Destruction",
+              "Not Classified"
+            ],
+            "job": "You are classifying information.",
+            "activity": "You are providing assessment of a potentially classified query statement based on appropriate classification_type for the classification_category list.  Limit response to the specified JSON output model.",
+            "output": {
+              "classification": "from the classification_type list",
+              "category ": "from the classification_category list"
+            }
+          }
+        }
+      },
+      "ext_keywords": {
+        "preprompt": {
+          "qryid": "ext_keywords",
+          "qrytype": "extraction",
+          "qryname": "Keyword Extraction",
+          "proctype": "doc",
+          "system": {
+            "category": [
+              "keywords",
+              "locations",
+              "proper names"
+            ],
+            "job": "You are extracting key words from input information.",
+            "activity": "From the input data, you are extracting key words based on categories.  Extract separate lists of key words based on provided categories.  Limit response to the JSON output model.",
+            "output": {
+              "keywords": [
+                "extracted keywords"
+              ]
+            }
+          }
+        }
+      },
+      "corr_latlong": {
+        "preprompt": {
+          "qryid": "corr_latlong",
+          "qrytype": "correlate",
+          "qryname": "Provide Lat Long for Locations",
+          "proctype": "word",
+          "system": {
+            "job": "You are correlating latitude and longitude for various locations.",
+            "activity": "For each location query, provide a latitude and longitude, limit the response to the JSON output model.",
+            "output": {
+              "latitude": "latitude value",
+              "longitude": "longitude value"
+            }
+          }
+        }
+      },
+      "eval_sent": {
+        "preprompt": {
+          "qryid": "eval_sent",
+          "qrytype": "evaluate",
+          "qryname": "Sentiment Evaluation",
+          "proctype": "line",
+          "system": {
+            "category": [
+              "negative",
+              "positive",
+              "uncertainty",
+              "litigious",
+              "strong modal",
+              "weak modal",
+              "constraining"
+            ],
+            "job": "You are extracting the sentiment category of input.",
+            "activity": "Evaluate the query to identify the sentiment from the category of the query, limit the response to the JSON output model.",
+            "output": {
+              "evaluated": "sentiment from category"
+            }
+          }
+        }
+      },
+      "sum_short": {
+        "preprompt": {
+          "qryid": "sum_short",
+          "qrytype": "summarize",
+          "qryname": "Short Summary of Document Content",
+          "proctype": "doc",
+          "system": {
+            "job": "You are providing brief summaries.",
+            "activity": "Provide a brief single sentence summary for the input query, limit the response to the JSON output model.",
+            "output": {
+              "summary": "summary"
+            }
+          }
+        }
+      },
+      "sum_docs": {
+        "preprompt": {
+          "qryid": "sum_docs",
+          "qrytype": "summarize",
+          "qryname": "Summarize Document Content",
+          "proctype": "doc",
+          "system": {
+            "job": "You are summarizing input information.",
+            "activity": "Provide a summary for the query, limit the response to the JSON output model.",
+            "output": {
+              "summary": "summary"
+            }
+          }
+        }
+      }
+    }
+  },
+  [
+    {
+      "llm_config": {
+        "model": "granite4:3b",
+        "testrun": "",
+        "format": "gguf",
+        "families": [
+          "granite"
+        ],
+        "quantizationlevel": "Q4_K_M",
+        "digest": "89962fcc75239ac434cdebceb6b7e0669397f92eaef9c487774b718bc36a3e5f",
+        "total_params": "3.4B",
+        "filesize GB": 2.099521385
+      }
+    },
+    {
+      "llm_settings": {
+        "llmconfig": "Baseline",
+        "keep_alive": "30m",
+        "format": "json",
+        "role": "system",
+        "options": {
+          "temperature": 0.7,
+          "seed": 42,
+          "top_k": 40,
+          "top_p": 0.9,
+          "min_p": 0,
+          "num_ctx": 1024,
+          "num_predict": 512
+        }
+      },
+      "batch_run": [
+        {
+          "run_type": "initialize model",
+          "instructions": "ask",
+          "payload_tokens": 6,
+          "payload_bytes": 21,
+          "results_full": [
+            {
+              "QUERY": "what is an airplane",
+              "RESULTS": {
+                "job": "You are answering questions.",
+                "activity": "Provide an answer to the question. If you do not have an answer, return 'I do not know about this'.  Limit the answer only to the JSON output model.",
+                "output": {
+                  "answer": "An airplane is a powered flying vehicle with fixed wings and fixed landing gear suitable for taking off and landing on land."
+                }
+              }
+            }
+          ],
+          "result_tokens": 130,
+          "results_size": 504,
+          "run_proctime": "0:00:13.024023"
+        },
+        {
+          "run_type": "extract related",
+          "instructions": "related_terms",
+          "payload_tokens": 3,
+          "payload_bytes": 10,
+          "results_full": [
+            {
+              "QUERY": "computer",
+              "RESULTS": {
+                "term": [
+                  "laptop",
+                  "desktop",
+                  "tablet",
+                  "smartphone",
+                  "server",
+                  "router",
+                  "monitor",
+                  "keyboard",
+                  "mouse",
+                  "hard drive"
+                ]
+              }
+            }
+          ],
+          "result_tokens": 98,
+          "results_size": 381,
+          "run_proctime": "0:00:08.014908"
+        },
+        {
+          "run_type": "definition, multiple word",
+          "instructions": "def_simple",
+          "payload_tokens": 5,
+          "payload_bytes": 28,
+          "results_full": [
+            {
+              "QUERY": "moose",
+              "RESULTS": {
+                "job": "You are providing definitions.",
+                "activity": "Provide a succinct definition for a term or expression. If a term cannot be defined, respond with 'no definition available'.  Limit the response to the JSON output model.",
+                "output": {
+                  "term": "moose",
+                  "definition": "A large North American deer (Alces alces) with large antlers and long legs."
+                }
+              }
+            },
+            {
+              "QUERY": "rocket",
+              "RESULTS": {
+                "job": "You are providing definitions.",
+                "activity": "Provide a succinct definition for a term or expression. If a term cannot be defined, respond with 'no definition available'.  Limit the response to the JSON output model.",
+                "output": {
+                  "term": "rocket",
+                  "definition": "A rocket is a vehicle, missile, or aircraft propelled by a rocket engine."
+                }
+              }
+            },
+            {
+              "QUERY": "explore",
+              "RESULTS": {
+                "job": "You are providing definitions.",
+                "activity": "Provide a succinct definition for a term or expression. If a term cannot be defined, respond with 'no definition available'.  Limit the response to the JSON output model.",
+                "output": {
+                  "term": "explore",
+                  "definition": "To explore is to examine, investigate, or travel through an area in order to learn about it or find something specific."
+                }
+              }
+            }
+          ],
+          "result_tokens": 390,
+          "results_size": 1550,
+          "run_proctime": "0:00:29.498214"
+        },
+        {
+          "run_type": "categorize, multiple word",
+          "instructions": "cat_animinveg",
+          "payload_tokens": 7,
+          "payload_bytes": 29,
+          "results_full": [
+            {
+              "QUERY": "goldfish",
+              "RESULTS": {
+                "job": "You are categorizing things into a specified set of categories.",
+                "activity": "Categorize each term as one of the suggested categories.  Limit the response to the JSON output model.",
+                "categories": [
+                  "animal",
+                  "mineral",
+                  "vegetable",
+                  "other"
+                ],
+                "output": {
+                  "results": "animal"
+                }
+              }
+            },
+            {
+              "QUERY": "computer",
+              "RESULTS": {
+                "job": "You are categorizing things into a specified set of categories.",
+                "activity": "Categorize each term as one of the suggested categories.  Limit the response to the JSON output model.",
+                "categories": [
+                  "animal",
+                  "mineral",
+                  "vegetable",
+                  "other"
+                ],
+                "output": {
+                  "results": "other"
+                }
+              }
+            },
+            {
+              "QUERY": "boulder",
+              "RESULTS": {
+                "job": "You are categorizing things into a specified set of categories.",
+                "activity": "Categorize each term as one of the suggested categories.  Limit the response to the JSON output model.",
+                "categories": [
+                  "animal",
+                  "mineral",
+                  "vegetable",
+                  "other"
+                ],
+                "output": {
+                  "results": "mineral"
+                }
+              }
+            }
+          ],
+          "result_tokens": 379,
+          "results_size": 1537,
+          "run_proctime": "0:00:26.561454"
+        },
+        {
+          "run_type": "classification",
+          "instructions": "class_milintel",
+          "payload_tokens": 25,
+          "payload_bytes": 119,
+          "results_full": [
+            {
+              "QUERY": "The terrorist compound was located in Libya via high resolution K14 satellite imagery at 0300 hrs on May 3, 2022 GMT.",
+              "RESULTS": {
+                "classification": "Top Secret",
+                "category": "Foreign Intelligence"
+              }
+            }
+          ],
+          "result_tokens": 73,
+          "results_size": 275,
+          "run_proctime": "0:00:14.694226"
+        },
+        {
+          "run_type": "extraction of key words",
+          "instructions": "ext_keywords",
+          "payload_tokens": 38,
+          "payload_bytes": 234,
+          "results_full": [
+            {
+              "QUERY": "Software engineering is a comprehensive discipline that encompasses a broad range of practices, methodologies, and tools aimed at the efficient and effective conception, design, development, and maintenance of software applications.",
+              "RESULTS": {
+                "category": [
+                  "keywords",
+                  "locations",
+                  "proper names"
+                ],
+                "job": "You are extracting key words from input information.",
+                "activity": "From the input data, you are extracting key words based on categories.  Extract separate lists of key words based on provided categories.  Limit response to the JSON output model.",
+                "output": {
+                  "keywords": [
+                    "software engineering",
+                    "discipline",
+                    "practices",
+                    "methodologies",
+                    "tools",
+                    "conception",
+                    "design",
+                    "development",
+                    "maintenance"
+                  ]
+                }
+              }
+            }
+          ],
+          "result_tokens": 223,
+          "results_size": 1106,
+          "run_proctime": "0:00:17.981936"
+        },
+        {
+          "run_type": "correlate locations to coordinates",
+          "instructions": "corr_latlong",
+          "payload_tokens": 6,
+          "payload_bytes": 18,
+          "results_full": [
+            {
+              "QUERY": "London",
+              "RESULTS": {
+                "latitude": "51.5074",
+                "longitude": "-0.1278"
+              }
+            },
+            {
+              "QUERY": "New York",
+              "RESULTS": {
+                "latitude": "40.7128",
+                "longitude": "-74.0060"
+              }
+            }
+          ],
+          "result_tokens": 97,
+          "results_size": 287,
+          "run_proctime": "0:00:08.394197"
+        },
+        {
+          "run_type": "correlation sentiment evaluation",
+          "instructions": "eval_sent",
+          "payload_tokens": 12,
+          "payload_bytes": 64,
+          "results_full": [
+            {
+              "QUERY": "The bully in the schoolyard attacked three different children.",
+              "RESULTS": {
+                "category": [
+                  "negative"
+                ],
+                "job": "You are extracting the sentiment category of input.",
+                "activity": "Evaluate the query to identify the sentiment from the category of the query, limit the response to the JSON output model.",
+                "output": {
+                  "evaluated": "negative"
+                }
+              }
+            }
+          ],
+          "result_tokens": 121,
+          "results_size": 498,
+          "run_proctime": "0:00:12.839638"
+        },
+        {
+          "run_type": "summarize, paragraph",
+          "instructions": "sum_short",
+          "payload_tokens": 730,
+          "payload_bytes": 3091,
+          "results_full": [
+            {
+              "QUERY": "Cinderella\n\nThe wife of a rich man fell sick and when she felt that her end drew nigh, she called her only daughter to her bedside, and said, \"Always be a good girl, and I will look down from heaven and watch over you.\" Soon afterwards she shut her eyes and died, and was buried in the garden; and the little girl went every day to her grave and wept, and was always good and kind to all about her. And the snow spread a beautiful white covering over the grave; but by the time the sun had melted it away again, her father had married another wife. This new wife had two daughters of her own: they were fair in face but foul at heart, and it was now a sorry time for the poor little girl. \"What does the good-for-nothing thing want in the parlor?\" said they; and they took away her fine clothes, and gave her an old frock to put on, and laughed at her and turned her into the kitchen.\n\nThen she was forced to do hard work; to rise early, before daylight, to bring the water, to make the fire, to cook and to wash. She had no bed to lie down on, but was made to lie by the hearth among the ashes, and they called her Cinderella.\n\nIt happened once that her father was going to the fair, and asked his wife's daughters what he should bring to them. \"Fine clothes,\" said the first. \"Pearls and diamonds,\" said the second. \"Now, child,\" said he to his own daughter, \"what will you have?\" \"The first sprig, dear father, that rubs against your hat on your way home,\" said she. Then he bought for the two first the fine clothes and pearls and diamonds they had asked for: and on his way home, as he rode through a green copse, a sprig of hazel brushed against him, so he broke it off and when he got home he gave it to his daughter. Then she took it, and went to her mother's grave and planted it there, and cried so much that it was watered with her tears; and there it grew and became a fine tree, and soon a little bird came and built its nest upon the tree, and talked with her and watched over her, and brought her whatever she wished for.\n\nNow it happened that the king of the land held a feast which was to last three days, and out of those who came to it his son was to choose a bride for himself; and Cinderella's two sisters were asked to come. So they called Cinderella, and said, \"Now, comb our hair, brush our shoes, and tie our sashes for us, for we are going to dance at the king's feast.\" Then she did as she was told, but when all was done she could not help crying, for she thought to herself, she would have liked to go to the dance too, and at last she begged her mother very hard to let her go, \"You! Cinderella?\" said she; \"you who have nothing to wear, no clothes at all, and who cannot even dance—you want to go to the ball?\" And when she kept on begging, to get rid of her, she said at last, \"I will throw this basinful of peas into the ash heap, and if you have picked them all out in two hours' time you shall go to the feast too.\" Then she threw the peas into the ashes; but the little maiden ran out at the back door into the garden.",
+              "RESULTS": {
+                "summary": "Cinderella is a poor girl forced to do hard work for her cruel stepfamily, and when invited to the king's feast by her sisters, uses magic from a bird on a tree planted from a fallen branch she received as a gift at her mother's grave to attend the ball."
+              }
+            }
+          ],
+          "result_tokens": 818,
+          "results_size": 3436,
+          "run_proctime": "0:00:56.370813"
+        },
+        {
+          "run_type": "short summarize, doc",
+          "instructions": "sum_docs",
+          "payload_tokens": 279,
+          "payload_bytes": 1712,
+          "results_full": [
+            {
+              "QUERY": "Radar Guided Missile\n\nA radar-guided air-to-air missile is a sophisticated weapon system designed for engagement and neutralization of aerial targets from a distance, utilizing radar technology for guidance. These missiles are launched from aircraft to intercept and destroy enemy aircraft or missiles. Their operation involves several key phases and components, which include:\n\n Key Components:\n\n1. Seeker Head: Equipped with radar sensors, the seeker head is responsible for detecting and tracking the target's radar echoes. It can operate in active, semi-active, or passive modes, depending on the missile's design.\n\n2. Guidance System: This system processes the data received from the seeker head and navigates the missile towards the target. In semi-active radar-guided missiles, the guidance system relies on the launch aircraft's radar to illuminate the target, while active radar-guided missiles have an onboard radar transmitter to illuminate the target independently.\n\n3. Propulsion System: Typically a rocket motor that propels the missile towards its target at high speeds. The propulsion system is designed to provide the missile with sufficient range and maneuverability to engage targets at various distances and altitudes.\n\n4. Warhead: The missile carries a high-explosive warhead designed to detonate on impact or in proximity to the target, causing damage or destruction. Some missiles may use fragmentation, blast, or shaped charges to maximize effectiveness against specific target types.\n\n5. Control Surfaces: Fins or canards that adjust the missile's flight path for guidance and maneuverability, allowing it to adjust its trajectory based on the guidance system's commands.",
+              "RESULTS": {
+                "summary": "A radar-guided air-to-air missile is a sophisticated weapon system designed for engagement and neutralization of aerial targets from a distance. It utilizes radar technology for guidance and includes key components such as a seeker head equipped with radar sensors, a guidance system processing data received from the seeker head, a propulsion system typically using rocket motors, a warhead carrying explosives, and control surfaces for maneuverability."
+              }
+            }
+          ],
+          "result_tokens": 383,
+          "results_size": 2257,
+          "run_proctime": "0:00:31.941802"
+        }
+      ]
+    },
+    {
+      "llm_settings": {
+        "llmconfig": "Low Temp",
+        "keep_alive": "30m",
+        "format": "json",
+        "role": "system",
+        "options": {
+          "temperature": 0.2,
+          "seed": 42,
+          "top_k": 40,
+          "top_p": 0.9,
+          "min_p": 0,
+          "num_ctx": 1024,
+          "num_predict": 512
+        }
+      },
+      "batch_run": [
+        {
+          "run_type": "initialize model",
+          "instructions": "ask",
+          "payload_tokens": 6,
+          "payload_bytes": 21,
+          "results_full": [
+            {
+              "QUERY": "what is an airplane",
+              "RESULTS": {
+                "answer": "An airplane is a powered flying vehicle with fixed wings and a weight exceeding its lift that is used for transporting people or cargo through the air."
+              }
+            }
+          ],
+          "result_tokens": 68,
+          "results_size": 262,
+          "run_proctime": "0:00:07.531804"
+        },
+        {
+          "run_type": "extract related",
+          "instructions": "related_terms",
+          "payload_tokens": 3,
+          "payload_bytes": 10,
+          "results_full": [
+            {
+              "QUERY": "computer",
+              "RESULTS": {
+                "term": [
+                  "laptop",
+                  "desktop",
+                  "tablet",
+                  "smartphone",
+                  "server",
+                  "router",
+                  "monitor",
+                  "keyboard",
+                  "mouse",
+                  "hard drive"
+                ]
+              }
+            }
+          ],
+          "result_tokens": 98,
+          "results_size": 381,
+          "run_proctime": "0:00:09.463588"
+        },
+        {
+          "run_type": "definition, multiple word",
+          "instructions": "def_simple",
+          "payload_tokens": 5,
+          "payload_bytes": 28,
+          "results_full": [
+            {
+              "QUERY": "moose",
+              "RESULTS": {
+                "job": "You are providing definitions.",
+                "activity": "Provide a succinct definition for a term or expression. If a term cannot be defined, respond with 'no definition available'.  Limit the response to the JSON output model.",
+                "output": {
+                  "term": "moose",
+                  "definition": "A large North American deer (Alces alces) of the genus Alces, having palmate antlers and long hind legs."
+                }
+              }
+            },
+            {
+              "QUERY": "rocket",
+              "RESULTS": {
+                "job": "You are providing definitions.",
+                "activity": "Provide a succinct definition for a term or expression. If a term cannot be defined, respond with 'no definition available'.  Limit the response to the JSON output model.",
+                "output": {
+                  "term": "rocket",
+                  "definition": "A rocket is a vehicle that uses propulsion to move through space by expelling gas at high speed in one direction, creating thrust in the opposite direction."
+                }
+              }
+            },
+            {
+              "QUERY": "explore",
+              "RESULTS": {
+                "job": "You are providing definitions.",
+                "activity": "Provide a succinct definition for a term or expression. If a term cannot be defined, respond with 'no definition available'.  Limit the response to the JSON output model.",
+                "output": {
+                  "term": "explore",
+                  "definition": "To explore is to investigate or examine something thoroughly in order to learn about it."
+                }
+              }
+            }
+          ],
+          "result_tokens": 401,
+          "results_size": 1631,
+          "run_proctime": "0:00:33.979997"
+        },
+        {
+          "run_type": "categorize, multiple word",
+          "instructions": "cat_animinveg",
+          "payload_tokens": 7,
+          "payload_bytes": 29,
+          "results_full": [
+            {
+              "QUERY": "goldfish",
+              "RESULTS": {
+                "job": "You are categorizing things into a specified set of categories.",
+                "activity": "Categorize each term as one of the suggested categories.  Limit the response to the JSON output model.",
+                "categories": [
+                  "animal",
+                  "mineral",
+                  "vegetable",
+                  "other"
+                ],
+                "output": {
+                  "results": "animal"
+                }
+              }
+            },
+            {
+              "QUERY": "computer",
+              "RESULTS": {
+                "job": "You are categorizing things into a specified set of categories.",
+                "activity": "Categorize each term as one of the suggested categories.  Limit the response to the JSON output model.",
+                "categories": [
+                  "animal",
+                  "mineral",
+                  "vegetable",
+                  "other"
+                ],
+                "output": {
+                  "results": "other"
+                }
+              }
+            },
+            {
+              "QUERY": "boulder",
+              "RESULTS": {
+                "job": "You are categorizing things into a specified set of categories.",
+                "activity": "Categorize each term as one of the suggested categories.  Limit the response to the JSON output model.",
+                "categories": [
+                  "animal",
+                  "mineral",
+                  "vegetable",
+                  "other"
+                ],
+                "output": {
+                  "results": "mineral"
+                }
+              }
+            }
+          ],
+          "result_tokens": 379,
+          "results_size": 1537,
+          "run_proctime": "0:00:28.654012"
+        },
+        {
+          "run_type": "classification",
+          "instructions": "class_milintel",
+          "payload_tokens": 25,
+          "payload_bytes": 119,
+          "results_full": [
+            {
+              "QUERY": "The terrorist compound was located in Libya via high resolution K14 satellite imagery at 0300 hrs on May 3, 2022 GMT.",
+              "RESULTS": {
+                "classification": "Secret",
+                "category": "Foreign Intelligence"
+              }
+            }
+          ],
+          "result_tokens": 72,
+          "results_size": 271,
+          "run_proctime": "0:00:15.956365"
+        },
+        {
+          "run_type": "extraction of key words",
+          "instructions": "ext_keywords",
+          "payload_tokens": 38,
+          "payload_bytes": 234,
+          "results_full": [
+            {
+              "QUERY": "Software engineering is a comprehensive discipline that encompasses a broad range of practices, methodologies, and tools aimed at the efficient and effective conception, design, development, and maintenance of software applications.",
+              "RESULTS": {
+                "category": [
+                  "keywords",
+                  "locations",
+                  "proper names"
+                ],
+                "job": "You are extracting key words from input information.",
+                "activity": "From the input data, you are extracting key words based on categories.  Extract separate lists of key words based on provided categories.  Limit response to the JSON output model.",
+                "output": {
+                  "keywords": [
+                    "software engineering",
+                    "conception",
+                    "design",
+                    "development",
+                    "maintenance"
+                  ]
+                }
+              }
+            }
+          ],
+          "result_tokens": 199,
+          "results_size": 973,
+          "run_proctime": "0:00:16.999791"
+        },
+        {
+          "run_type": "correlate locations to coordinates",
+          "instructions": "corr_latlong",
+          "payload_tokens": 6,
+          "payload_bytes": 18,
+          "results_full": [
+            {
+              "QUERY": "London",
+              "RESULTS": {
+                "latitude": "51.5074",
+                "longitude": "-0.1278"
+              }
+            },
+            {
+              "QUERY": "New York",
+              "RESULTS": {
+                "latitude": "40.7128",
+                "longitude": "-74.0060"
+              }
+            }
+          ],
+          "result_tokens": 97,
+          "results_size": 287,
+          "run_proctime": "0:00:08.910556"
+        },
+        {
+          "run_type": "correlation sentiment evaluation",
+          "instructions": "eval_sent",
+          "payload_tokens": 12,
+          "payload_bytes": 64,
+          "results_full": [
+            {
+              "QUERY": "The bully in the schoolyard attacked three different children.",
+              "RESULTS": {
+                "category": [
+                  "negative",
+                  "positive",
+                  "uncertainty",
+                  "litigious",
+                  "strong modal",
+                  "weak modal",
+                  "constraining"
+                ],
+                "job": "You are extracting the sentiment category of input.",
+                "activity": "Evaluate the query to identify the sentiment from the category of the query, limit the response to the JSON output model.",
+                "output": {
+                  "evaluated": "negative"
+                }
+              }
+            }
+          ],
+          "result_tokens": 159,
+          "results_size": 680,
+          "run_proctime": "0:00:14.969442"
+        },
+        {
+          "run_type": "summarize, paragraph",
+          "instructions": "sum_short",
+          "payload_tokens": 730,
+          "payload_bytes": 3091,
+          "results_full": [
+            {
+              "QUERY": "Cinderella\n\nThe wife of a rich man fell sick and when she felt that her end drew nigh, she called her only daughter to her bedside, and said, \"Always be a good girl, and I will look down from heaven and watch over you.\" Soon afterwards she shut her eyes and died, and was buried in the garden; and the little girl went every day to her grave and wept, and was always good and kind to all about her. And the snow spread a beautiful white covering over the grave; but by the time the sun had melted it away again, her father had married another wife. This new wife had two daughters of her own: they were fair in face but foul at heart, and it was now a sorry time for the poor little girl. \"What does the good-for-nothing thing want in the parlor?\" said they; and they took away her fine clothes, and gave her an old frock to put on, and laughed at her and turned her into the kitchen.\n\nThen she was forced to do hard work; to rise early, before daylight, to bring the water, to make the fire, to cook and to wash. She had no bed to lie down on, but was made to lie by the hearth among the ashes, and they called her Cinderella.\n\nIt happened once that her father was going to the fair, and asked his wife's daughters what he should bring to them. \"Fine clothes,\" said the first. \"Pearls and diamonds,\" said the second. \"Now, child,\" said he to his own daughter, \"what will you have?\" \"The first sprig, dear father, that rubs against your hat on your way home,\" said she. Then he bought for the two first the fine clothes and pearls and diamonds they had asked for: and on his way home, as he rode through a green copse, a sprig of hazel brushed against him, so he broke it off and when he got home he gave it to his daughter. Then she took it, and went to her mother's grave and planted it there, and cried so much that it was watered with her tears; and there it grew and became a fine tree, and soon a little bird came and built its nest upon the tree, and talked with her and watched over her, and brought her whatever she wished for.\n\nNow it happened that the king of the land held a feast which was to last three days, and out of those who came to it his son was to choose a bride for himself; and Cinderella's two sisters were asked to come. So they called Cinderella, and said, \"Now, comb our hair, brush our shoes, and tie our sashes for us, for we are going to dance at the king's feast.\" Then she did as she was told, but when all was done she could not help crying, for she thought to herself, she would have liked to go to the dance too, and at last she begged her mother very hard to let her go, \"You! Cinderella?\" said she; \"you who have nothing to wear, no clothes at all, and who cannot even dance—you want to go to the ball?\" And when she kept on begging, to get rid of her, she said at last, \"I will throw this basinful of peas into the ash heap, and if you have picked them all out in two hours' time you shall go to the feast too.\" Then she threw the peas into the ashes; but the little maiden ran out at the back door into the garden.",
+              "RESULTS": {
+                "summary": "Cinderella is a poor girl forced to do hard work after her mother dies and her stepmother treats her poorly, until she attends a king's feast with her fairy godmother's help and dances with the prince, ultimately winning his love and becoming more prosperous."
+              }
+            }
+          ],
+          "result_tokens": 812,
+          "results_size": 3441,
+          "run_proctime": "0:00:58.104425"
+        },
+        {
+          "run_type": "short summarize, doc",
+          "instructions": "sum_docs",
+          "payload_tokens": 279,
+          "payload_bytes": 1712,
+          "results_full": [
+            {
+              "QUERY": "Radar Guided Missile\n\nA radar-guided air-to-air missile is a sophisticated weapon system designed for engagement and neutralization of aerial targets from a distance, utilizing radar technology for guidance. These missiles are launched from aircraft to intercept and destroy enemy aircraft or missiles. Their operation involves several key phases and components, which include:\n\n Key Components:\n\n1. Seeker Head: Equipped with radar sensors, the seeker head is responsible for detecting and tracking the target's radar echoes. It can operate in active, semi-active, or passive modes, depending on the missile's design.\n\n2. Guidance System: This system processes the data received from the seeker head and navigates the missile towards the target. In semi-active radar-guided missiles, the guidance system relies on the launch aircraft's radar to illuminate the target, while active radar-guided missiles have an onboard radar transmitter to illuminate the target independently.\n\n3. Propulsion System: Typically a rocket motor that propels the missile towards its target at high speeds. The propulsion system is designed to provide the missile with sufficient range and maneuverability to engage targets at various distances and altitudes.\n\n4. Warhead: The missile carries a high-explosive warhead designed to detonate on impact or in proximity to the target, causing damage or destruction. Some missiles may use fragmentation, blast, or shaped charges to maximize effectiveness against specific target types.\n\n5. Control Surfaces: Fins or canards that adjust the missile's flight path for guidance and maneuverability, allowing it to adjust its trajectory based on the guidance system's commands.",
+              "RESULTS": {
+                "summary": "A radar-guided air-to-air missile is a sophisticated weapon system designed for engagement and neutralization of aerial targets from a distance. It utilizes radar technology for guidance and consists of key components such as a seeker head with radar sensors, a guidance system processing target data, a propulsion system propelled by rocket motors, a warhead for damage or destruction, and control surfaces for trajectory adjustment."
+              }
+            }
+          ],
+          "result_tokens": 382,
+          "results_size": 2237,
+          "run_proctime": "0:00:31.497723"
+        }
+      ]
+    }
+  ],
+  [
+    {
+      "llm_config": {
+        "model": "gemma3:4b",
+        "testrun": "",
+        "format": "gguf",
+        "families": [
+          "gemma3"
+        ],
+        "quantizationlevel": "Q4_K_M",
+        "digest": "a2af6cc3eb7fa8be8504abaf9b04e88f17a119ec3f04a3addf55f92841195f5a",
+        "total_params": "4.3B",
+        "filesize GB": 3.338801804
+      }
+    },
+    {
+      "llm_settings": {
+        "llmconfig": "Baseline",
+        "keep_alive": "30m",
+        "format": "json",
+        "role": "system",
+        "options": {
+          "temperature": 0.7,
+          "seed": 42,
+          "top_k": 40,
+          "top_p": 0.9,
+          "min_p": 0,
+          "num_ctx": 1024,
+          "num_predict": 512
+        }
+      },
+      "batch_run": [
+        {
+          "run_type": "initialize model",
+          "instructions": "ask",
+          "payload_tokens": 6,
+          "payload_bytes": 21,
+          "results_full": [
+            {
+              "QUERY": "what is an airplane",
+              "RESULTS": {
+                "answer": "An airplane is a vehicle capable of sustained flight through the air. It typically consists of a fixed wing that generates lift, a fuselage for passengers and cargo, and an engine to provide thrust."
+              }
+            }
+          ],
+          "result_tokens": 78,
+          "results_size": 309,
+          "run_proctime": "0:00:12.538825"
+        },
+        {
+          "run_type": "extract related",
+          "instructions": "related_terms",
+          "payload_tokens": 3,
+          "payload_bytes": 10,
+          "results_full": [
+            {
+              "QUERY": "computer",
+              "RESULTS": {
+                "output": {
+                  "term": [
+                    "hardware",
+                    "software",
+                    "processor",
+                    "memory",
+                    "operating system",
+                    "digital",
+                    "network",
+                    "byte",
+                    "algorithm",
+                    "programming"
+                  ]
+                }
+              }
+            }
+          ],
+          "result_tokens": 107,
+          "results_size": 481,
+          "run_proctime": "0:00:08.531078"
+        },
+        {
+          "run_type": "definition, multiple word",
+          "instructions": "def_simple",
+          "payload_tokens": 5,
+          "payload_bytes": 28,
+          "results_full": [
+            {
+              "QUERY": "moose",
+              "RESULTS": {
+                "term": "moose",
+                "definition": "a large, dark-colored deer native to North America and Eurasia."
+              }
+            },
+            {
+              "QUERY": "rocket",
+              "RESULTS": {
+                "term": "rocket",
+                "definition": "A vehicle propelled by the ejection of high-velocity gases, typically for space travel or military use."
+              }
+            },
+            {
+              "QUERY": "explore",
+              "RESULTS": {
+                "term": "explore",
+                "definition": "to investigate or examine carefully; to travel through unfamiliar areas."
+              }
+            }
+          ],
+          "result_tokens": 178,
+          "results_size": 630,
+          "run_proctime": "0:00:16.479598"
+        },
+        {
+          "run_type": "categorize, multiple word",
+          "instructions": "cat_animinveg",
+          "payload_tokens": 7,
+          "payload_bytes": 29,
+          "results_full": [
+            {
+              "QUERY": "goldfish",
+              "RESULTS": {
+                "results": "animal"
+              }
+            },
+            {
+              "QUERY": "computer",
+              "RESULTS": {
+                "results": "other"
+              }
+            },
+            {
+              "QUERY": "boulder",
+              "RESULTS": {
+                "results": "mineral"
+              }
+            }
+          ],
+          "result_tokens": 109,
+          "results_size": 316,
+          "run_proctime": "0:00:10.096717"
+        },
+        {
+          "run_type": "classification",
+          "instructions": "class_milintel",
+          "payload_tokens": 25,
+          "payload_bytes": 119,
+          "results_full": [
+            {
+              "QUERY": "The terrorist compound was located in Libya via high resolution K14 satellite imagery at 0300 hrs on May 3, 2022 GMT.",
+              "RESULTS": {
+                "classification": "Secret",
+                "category": "Foreign Governments"
+              }
+            }
+          ],
+          "result_tokens": 72,
+          "results_size": 270,
+          "run_proctime": "0:00:16.844011"
+        },
+        {
+          "run_type": "extraction of key words",
+          "instructions": "ext_keywords",
+          "payload_tokens": 38,
+          "payload_bytes": 234,
+          "results_full": [
+            {
+              "QUERY": "Software engineering is a comprehensive discipline that encompasses a broad range of practices, methodologies, and tools aimed at the efficient and effective conception, design, development, and maintenance of software applications.",
+              "RESULTS": {
+                "keywords": [
+                  "software engineering",
+                  "applications",
+                  "design",
+                  "development",
+                  "maintenance",
+                  "practices",
+                  "methodologies",
+                  "tools",
+                  "conception"
+                ]
+              }
+            }
+          ],
+          "result_tokens": 126,
+          "results_size": 615,
+          "run_proctime": "0:00:11.473925"
+        },
+        {
+          "run_type": "correlate locations to coordinates",
+          "instructions": "corr_latlong",
+          "payload_tokens": 6,
+          "payload_bytes": 18,
+          "results_full": [
+            {
+              "QUERY": "London",
+              "RESULTS": {
+                "latitude": "51.5074",
+                "longitude": "-0.1278"
+              }
+            },
+            {
+              "QUERY": "New York",
+              "RESULTS": {
+                "latitude": "40.7128",
+                "longitude": "-74.0060"
+              }
+            }
+          ],
+          "result_tokens": 97,
+          "results_size": 287,
+          "run_proctime": "0:00:11.277080"
+        },
+        {
+          "run_type": "correlation sentiment evaluation",
+          "instructions": "eval_sent",
+          "payload_tokens": 12,
+          "payload_bytes": 64,
+          "results_full": [
+            {
+              "QUERY": "The bully in the schoolyard attacked three different children.",
+              "RESULTS": {
+                "evaluated": "negative"
+              }
+            }
+          ],
+          "result_tokens": 47,
+          "results_size": 165,
+          "run_proctime": "0:00:07.731450"
+        },
+        {
+          "run_type": "summarize, paragraph",
+          "instructions": "sum_short",
+          "payload_tokens": 730,
+          "payload_bytes": 3091,
+          "results_full": [
+            {
+              "QUERY": "Cinderella\n\nThe wife of a rich man fell sick and when she felt that her end drew nigh, she called her only daughter to her bedside, and said, \"Always be a good girl, and I will look down from heaven and watch over you.\" Soon afterwards she shut her eyes and died, and was buried in the garden; and the little girl went every day to her grave and wept, and was always good and kind to all about her. And the snow spread a beautiful white covering over the grave; but by the time the sun had melted it away again, her father had married another wife. This new wife had two daughters of her own: they were fair in face but foul at heart, and it was now a sorry time for the poor little girl. \"What does the good-for-nothing thing want in the parlor?\" said they; and they took away her fine clothes, and gave her an old frock to put on, and laughed at her and turned her into the kitchen.\n\nThen she was forced to do hard work; to rise early, before daylight, to bring the water, to make the fire, to cook and to wash. She had no bed to lie down on, but was made to lie by the hearth among the ashes, and they called her Cinderella.\n\nIt happened once that her father was going to the fair, and asked his wife's daughters what he should bring to them. \"Fine clothes,\" said the first. \"Pearls and diamonds,\" said the second. \"Now, child,\" said he to his own daughter, \"what will you have?\" \"The first sprig, dear father, that rubs against your hat on your way home,\" said she. Then he bought for the two first the fine clothes and pearls and diamonds they had asked for: and on his way home, as he rode through a green copse, a sprig of hazel brushed against him, so he broke it off and when he got home he gave it to his daughter. Then she took it, and went to her mother's grave and planted it there, and cried so much that it was watered with her tears; and there it grew and became a fine tree, and soon a little bird came and built its nest upon the tree, and talked with her and watched over her, and brought her whatever she wished for.\n\nNow it happened that the king of the land held a feast which was to last three days, and out of those who came to it his son was to choose a bride for himself; and Cinderella's two sisters were asked to come. So they called Cinderella, and said, \"Now, comb our hair, brush our shoes, and tie our sashes for us, for we are going to dance at the king's feast.\" Then she did as she was told, but when all was done she could not help crying, for she thought to herself, she would have liked to go to the dance too, and at last she begged her mother very hard to let her go, \"You! Cinderella?\" said she; \"you who have nothing to wear, no clothes at all, and who cannot even dance—you want to go to the ball?\" And when she kept on begging, to get rid of her, she said at last, \"I will throw this basinful of peas into the ash heap, and if you have picked them all out in two hours' time you shall go to the feast too.\" Then she threw the peas into the ashes; but the little maiden ran out at the back door into the garden.",
+              "RESULTS": {
+                "summary": "A kind young girl is mistreated by her stepmother and stepsisters, but through a magical plant and a fairy godmother's intervention, she attends the king's feast and captures the prince's attention."
+              }
+            }
+          ],
+          "result_tokens": 800,
+          "results_size": 3380,
+          "run_proctime": "0:00:56.825669"
+        },
+        {
+          "run_type": "short summarize, doc",
+          "instructions": "sum_docs",
+          "payload_tokens": 279,
+          "payload_bytes": 1712,
+          "results_full": [
+            {
+              "QUERY": "Radar Guided Missile\n\nA radar-guided air-to-air missile is a sophisticated weapon system designed for engagement and neutralization of aerial targets from a distance, utilizing radar technology for guidance. These missiles are launched from aircraft to intercept and destroy enemy aircraft or missiles. Their operation involves several key phases and components, which include:\n\n Key Components:\n\n1. Seeker Head: Equipped with radar sensors, the seeker head is responsible for detecting and tracking the target's radar echoes. It can operate in active, semi-active, or passive modes, depending on the missile's design.\n\n2. Guidance System: This system processes the data received from the seeker head and navigates the missile towards the target. In semi-active radar-guided missiles, the guidance system relies on the launch aircraft's radar to illuminate the target, while active radar-guided missiles have an onboard radar transmitter to illuminate the target independently.\n\n3. Propulsion System: Typically a rocket motor that propels the missile towards its target at high speeds. The propulsion system is designed to provide the missile with sufficient range and maneuverability to engage targets at various distances and altitudes.\n\n4. Warhead: The missile carries a high-explosive warhead designed to detonate on impact or in proximity to the target, causing damage or destruction. Some missiles may use fragmentation, blast, or shaped charges to maximize effectiveness against specific target types.\n\n5. Control Surfaces: Fins or canards that adjust the missile's flight path for guidance and maneuverability, allowing it to adjust its trajectory based on the guidance system's commands.",
+              "RESULTS": {
+                "summary": "A radar-guided air-to-air missile utilizes radar technology to engage and destroy aerial targets at a distance. Key components include a seeker head (with radar sensors), a guidance system (active or semi-active), a propulsion system (rocket motor), a high-explosive warhead, and control surfaces for maneuvering. These missiles are launched from aircraft to intercept and neutralize enemy aircraft or missiles."
+              }
+            }
+          ],
+          "result_tokens": 383,
+          "results_size": 2214,
+          "run_proctime": "0:00:32.787773"
+        }
+      ]
+    },
+    {
+      "llm_settings": {
+        "llmconfig": "Low Temp",
+        "keep_alive": "30m",
+        "format": "json",
+        "role": "system",
+        "options": {
+          "temperature": 0.2,
+          "seed": 42,
+          "top_k": 40,
+          "top_p": 0.9,
+          "min_p": 0,
+          "num_ctx": 1024,
+          "num_predict": 512
+        }
+      },
+      "batch_run": [
+        {
+          "run_type": "initialize model",
+          "instructions": "ask",
+          "payload_tokens": 6,
+          "payload_bytes": 21,
+          "results_full": [
+            {
+              "QUERY": "what is an airplane",
+              "RESULTS": {
+                "answer": "An airplane is a vehicle capable of sustained flight through the air. It typically consists of a fixed wing, a tail section for stability, and an engine to generate thrust. Airplanes are used for transportation of people and goods over long distances."
+              }
+            }
+          ],
+          "result_tokens": 87,
+          "results_size": 362,
+          "run_proctime": "0:00:10.577182"
+        },
+        {
+          "run_type": "extract related",
+          "instructions": "related_terms",
+          "payload_tokens": 3,
+          "payload_bytes": 10,
+          "results_full": [
+            {
+              "QUERY": "computer",
+              "RESULTS": {
+                "output": {
+                  "term": [
+                    "hardware",
+                    "software",
+                    "processor",
+                    "memory",
+                    "operating system",
+                    "digital",
+                    "network",
+                    "byte",
+                    "algorithm",
+                    "programming"
+                  ]
+                }
+              }
+            }
+          ],
+          "result_tokens": 107,
+          "results_size": 481,
+          "run_proctime": "0:00:08.801759"
+        },
+        {
+          "run_type": "definition, multiple word",
+          "instructions": "def_simple",
+          "payload_tokens": 5,
+          "payload_bytes": 28,
+          "results_full": [
+            {
+              "QUERY": "moose",
+              "RESULTS": {
+                "term": "moose",
+                "definition": "a large, brown deer native to North America and Eurasia."
+              }
+            },
+            {
+              "QUERY": "rocket",
+              "RESULTS": {
+                "term": "rocket",
+                "definition": "A vehicle propelled by the ejection of high-speed exhaust gases."
+              }
+            },
+            {
+              "QUERY": "explore",
+              "RESULTS": {
+                "term": "explore",
+                "definition": "to investigate or examine carefully."
+              }
+            }
+          ],
+          "result_tokens": 165,
+          "results_size": 548,
+          "run_proctime": "0:00:15.265932"
+        },
+        {
+          "run_type": "categorize, multiple word",
+          "instructions": "cat_animinveg",
+          "payload_tokens": 7,
+          "payload_bytes": 29,
+          "results_full": [
+            {
+              "QUERY": "goldfish",
+              "RESULTS": {
+                "results": "animal"
+              }
+            },
+            {
+              "QUERY": "computer",
+              "RESULTS": {
+                "results": "other"
+              }
+            },
+            {
+              "QUERY": "boulder",
+              "RESULTS": {
+                "results": "mineral"
+              }
+            }
+          ],
+          "result_tokens": 109,
+          "results_size": 316,
+          "run_proctime": "0:00:10.029322"
+        },
+        {
+          "run_type": "classification",
+          "instructions": "class_milintel",
+          "payload_tokens": 25,
+          "payload_bytes": 119,
+          "results_full": [
+            {
+              "QUERY": "The terrorist compound was located in Libya via high resolution K14 satellite imagery at 0300 hrs on May 3, 2022 GMT.",
+              "RESULTS": {
+                "classification": "Secret",
+                "category": "Foreign Governments"
+              }
+            }
+          ],
+          "result_tokens": 72,
+          "results_size": 270,
+          "run_proctime": "0:00:16.936994"
+        },
+        {
+          "run_type": "extraction of key words",
+          "instructions": "ext_keywords",
+          "payload_tokens": 38,
+          "payload_bytes": 234,
+          "results_full": [
+            {
+              "QUERY": "Software engineering is a comprehensive discipline that encompasses a broad range of practices, methodologies, and tools aimed at the efficient and effective conception, design, development, and maintenance of software applications.",
+              "RESULTS": {
+                "keywords": [
+                  "software engineering",
+                  "applications",
+                  "design",
+                  "development",
+                  "maintenance",
+                  "practices",
+                  "methodologies",
+                  "tools",
+                  "conception"
+                ]
+              }
+            }
+          ],
+          "result_tokens": 126,
+          "results_size": 615,
+          "run_proctime": "0:00:11.585510"
+        },
+        {
+          "run_type": "correlate locations to coordinates",
+          "instructions": "corr_latlong",
+          "payload_tokens": 6,
+          "payload_bytes": 18,
+          "results_full": [
+            {
+              "QUERY": "London",
+              "RESULTS": {
+                "latitude": "51.5074",
+                "longitude": "-0.1278"
+              }
+            },
+            {
+              "QUERY": "New York",
+              "RESULTS": {
+                "latitude": "40.7128",
+                "longitude": "-74.0060"
+              }
+            }
+          ],
+          "result_tokens": 97,
+          "results_size": 287,
+          "run_proctime": "0:00:11.459341"
+        },
+        {
+          "run_type": "correlation sentiment evaluation",
+          "instructions": "eval_sent",
+          "payload_tokens": 12,
+          "payload_bytes": 64,
+          "results_full": [
+            {
+              "QUERY": "The bully in the schoolyard attacked three different children.",
+              "RESULTS": {
+                "evaluated": "negative"
+              }
+            }
+          ],
+          "result_tokens": 47,
+          "results_size": 165,
+          "run_proctime": "0:00:07.484554"
+        },
+        {
+          "run_type": "summarize, paragraph",
+          "instructions": "sum_short",
+          "payload_tokens": 730,
+          "payload_bytes": 3091,
+          "results_full": [
+            {
+              "QUERY": "Cinderella\n\nThe wife of a rich man fell sick and when she felt that her end drew nigh, she called her only daughter to her bedside, and said, \"Always be a good girl, and I will look down from heaven and watch over you.\" Soon afterwards she shut her eyes and died, and was buried in the garden; and the little girl went every day to her grave and wept, and was always good and kind to all about her. And the snow spread a beautiful white covering over the grave; but by the time the sun had melted it away again, her father had married another wife. This new wife had two daughters of her own: they were fair in face but foul at heart, and it was now a sorry time for the poor little girl. \"What does the good-for-nothing thing want in the parlor?\" said they; and they took away her fine clothes, and gave her an old frock to put on, and laughed at her and turned her into the kitchen.\n\nThen she was forced to do hard work; to rise early, before daylight, to bring the water, to make the fire, to cook and to wash. She had no bed to lie down on, but was made to lie by the hearth among the ashes, and they called her Cinderella.\n\nIt happened once that her father was going to the fair, and asked his wife's daughters what he should bring to them. \"Fine clothes,\" said the first. \"Pearls and diamonds,\" said the second. \"Now, child,\" said he to his own daughter, \"what will you have?\" \"The first sprig, dear father, that rubs against your hat on your way home,\" said she. Then he bought for the two first the fine clothes and pearls and diamonds they had asked for: and on his way home, as he rode through a green copse, a sprig of hazel brushed against him, so he broke it off and when he got home he gave it to his daughter. Then she took it, and went to her mother's grave and planted it there, and cried so much that it was watered with her tears; and there it grew and became a fine tree, and soon a little bird came and built its nest upon the tree, and talked with her and watched over her, and brought her whatever she wished for.\n\nNow it happened that the king of the land held a feast which was to last three days, and out of those who came to it his son was to choose a bride for himself; and Cinderella's two sisters were asked to come. So they called Cinderella, and said, \"Now, comb our hair, brush our shoes, and tie our sashes for us, for we are going to dance at the king's feast.\" Then she did as she was told, but when all was done she could not help crying, for she thought to herself, she would have liked to go to the dance too, and at last she begged her mother very hard to let her go, \"You! Cinderella?\" said she; \"you who have nothing to wear, no clothes at all, and who cannot even dance—you want to go to the ball?\" And when she kept on begging, to get rid of her, she said at last, \"I will throw this basinful of peas into the ash heap, and if you have picked them all out in two hours' time you shall go to the feast too.\" Then she threw the peas into the ashes; but the little maiden ran out at the back door into the garden.",
+              "RESULTS": {
+                "summary": "A kind young girl is mistreated by her stepmother and stepsisters, but through a magical tree and her own persistence, she attends the king's feast and captures the prince's attention."
+              }
+            }
+          ],
+          "result_tokens": 798,
+          "results_size": 3366,
+          "run_proctime": "0:00:54.969361"
+        },
+        {
+          "run_type": "short summarize, doc",
+          "instructions": "sum_docs",
+          "payload_tokens": 279,
+          "payload_bytes": 1712,
+          "results_full": [
+            {
+              "QUERY": "Radar Guided Missile\n\nA radar-guided air-to-air missile is a sophisticated weapon system designed for engagement and neutralization of aerial targets from a distance, utilizing radar technology for guidance. These missiles are launched from aircraft to intercept and destroy enemy aircraft or missiles. Their operation involves several key phases and components, which include:\n\n Key Components:\n\n1. Seeker Head: Equipped with radar sensors, the seeker head is responsible for detecting and tracking the target's radar echoes. It can operate in active, semi-active, or passive modes, depending on the missile's design.\n\n2. Guidance System: This system processes the data received from the seeker head and navigates the missile towards the target. In semi-active radar-guided missiles, the guidance system relies on the launch aircraft's radar to illuminate the target, while active radar-guided missiles have an onboard radar transmitter to illuminate the target independently.\n\n3. Propulsion System: Typically a rocket motor that propels the missile towards its target at high speeds. The propulsion system is designed to provide the missile with sufficient range and maneuverability to engage targets at various distances and altitudes.\n\n4. Warhead: The missile carries a high-explosive warhead designed to detonate on impact or in proximity to the target, causing damage or destruction. Some missiles may use fragmentation, blast, or shaped charges to maximize effectiveness against specific target types.\n\n5. Control Surfaces: Fins or canards that adjust the missile's flight path for guidance and maneuverability, allowing it to adjust its trajectory based on the guidance system's commands.",
+              "RESULTS": {
+                "summary": "A radar-guided air-to-air missile utilizes radar technology to engage and destroy aerial targets at a distance. Key components include a seeker head (with radar sensors), a guidance system (active or semi-active), a propulsion system (rocket motor), a high-explosive warhead, and control surfaces for maneuvering. These missiles are launched from aircraft to intercept and neutralize enemy aircraft or missiles."
+              }
+            }
+          ],
+          "result_tokens": 383,
+          "results_size": 2214,
+          "run_proctime": "0:00:33.413065"
+        }
+      ]
+    }
+  ]
+]

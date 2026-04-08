@@ -1,0 +1,292 @@
+[
+  {
+    "platform": "Ollama (Web Remote)"
+  },
+  {
+    "instruction_set": {
+      "related_terms": {
+        "preprompt": {
+          "qryid": "related_terms",
+          "qrytype": "list",
+          "qryname": "Provide a list of related terms.",
+          "proctype": "word",
+          "system": {
+            "job": "You are creating lists of related terms.",
+            "activity": "Provide a list of 10 words or short phrases related to the query.  Limit the response to the list in the JSON output model.",
+            "output": {
+              "term": [
+                "related terms"
+              ]
+            }
+          }
+        }
+      },
+      "def_simple": {
+        "preprompt": {
+          "qryid": "def_simple",
+          "qrytype": "define",
+          "qryname": "Definition",
+          "proctype": "word",
+          "system": {
+            "job": "You are providing definitions.",
+            "activity": "Provide a succinct definition for a term or expression. If a term cannot be defined, respond with 'no definition available'.  Limit the response to the JSON output model.",
+            "output": {
+              "term": "each term",
+              "definition": "definition"
+            }
+          }
+        }
+      },
+      "ext_keywords": {
+        "preprompt": {
+          "qryid": "ext_keywords",
+          "qrytype": "extraction",
+          "qryname": "Keyword Extraction",
+          "proctype": "doc",
+          "system": {
+            "category": [
+              "keywords",
+              "locations",
+              "proper names"
+            ],
+            "job": "You are extracting key words from input information.",
+            "activity": "From the input data, you are extracting key words based on categories.  Extract separate lists of key words based on provided categories.  Limit response to the JSON output model.",
+            "output": {
+              "keywords": [
+                "extracted keywords"
+              ]
+            }
+          }
+        }
+      },
+      "corr_latlong": {
+        "preprompt": {
+          "qryid": "corr_latlong",
+          "qrytype": "correlate",
+          "qryname": "Provide Lat Long for Locations",
+          "proctype": "word",
+          "system": {
+            "job": "You are correlating latitude and longitude for various locations.",
+            "activity": "For each location query, provide a latitude and longitude, limit the response to the JSON output model.",
+            "output": {
+              "latitude": "latitude value",
+              "longitude": "longitude value"
+            }
+          }
+        }
+      },
+      "sum_short": {
+        "preprompt": {
+          "qryid": "sum_short",
+          "qrytype": "summarize",
+          "qryname": "Short Summary of Document Content",
+          "proctype": "doc",
+          "system": {
+            "job": "You are providing brief summaries.",
+            "activity": "Provide a brief single sentence summary for the input query, limit the response to the JSON output model.",
+            "output": {
+              "summary": "summary"
+            }
+          }
+        }
+      },
+      "sum_docs": {
+        "preprompt": {
+          "qryid": "sum_docs",
+          "qrytype": "summarize",
+          "qryname": "Summarize Document Content",
+          "proctype": "doc",
+          "system": {
+            "job": "You are summarizing input information.",
+            "activity": "Provide a summary for the query, limit the response to the JSON output model.",
+            "output": {
+              "summary": "summary"
+            }
+          }
+        }
+      }
+    }
+  },
+  [
+    {
+      "llm_config": {
+        "model": "glm-4.7:cloud",
+        "testrun": "",
+        "format": "",
+        "families": null,
+        "quantizationlevel": "",
+        "digest": "0236088648195aa13eaa52faa8152e8ac4fd7e4e137939d57a2a5576a8fd3df8",
+        "total_params": "",
+        "filesize GB": 3.27e-07
+      }
+    },
+    {
+      "llm_settings": {
+        "llmconfig": "Baseline",
+        "keep_alive": "30m",
+        "format": "json",
+        "role": "system",
+        "options": {
+          "temperature": 0.7,
+          "seed": 42,
+          "top_k": 40,
+          "top_p": 0.9,
+          "min_p": 0,
+          "num_ctx": 1024,
+          "num_predict": 512
+        }
+      },
+      "batch_run": [
+        {
+          "run_type": "extract related",
+          "instructions": "related_terms",
+          "payload_tokens": 3,
+          "payload_bytes": 10,
+          "results_full": [
+            {
+              "QUERY": "computer",
+              "RESULTS": {
+                "term": [
+                  "Laptop",
+                  "Hardware",
+                  "Software",
+                  "Internet",
+                  "Keyboard",
+                  "Monitor",
+                  "Processor",
+                  "Operating System",
+                  "Data",
+                  "Programming"
+                ]
+              }
+            }
+          ],
+          "result_tokens": 98,
+          "results_size": 395,
+          "run_proctime": "0:00:08.340884"
+        },
+        {
+          "run_type": "definition, multiple word",
+          "instructions": "def_simple",
+          "payload_tokens": 5,
+          "payload_bytes": 28,
+          "results_full": [
+            {
+              "QUERY": "moose",
+              "RESULTS": {
+                "term": "moose",
+                "definition": "A large deer native to northern North America and Eurasia, having a broad, pendulous muzzle and large, palmate antlers in the male."
+              }
+            },
+            {
+              "QUERY": "rocket",
+              "RESULTS": {
+                "term": "rocket",
+                "definition": "A cylindrical projectile that can be propelled to a great height or distance by the combustion of its contents."
+              }
+            },
+            {
+              "QUERY": "explore",
+              "RESULTS": {
+                "term": "explore",
+                "definition": "To travel through or examine an area or subject in order to learn about it."
+              }
+            }
+          ],
+          "result_tokens": 198,
+          "results_size": 709,
+          "run_proctime": "0:00:15.363684"
+        },
+        {
+          "run_type": "extraction of key words",
+          "instructions": "ext_keywords",
+          "payload_tokens": 38,
+          "payload_bytes": 234,
+          "results_full": [
+            {
+              "QUERY": "Software engineering is a comprehensive discipline that encompasses a broad range of practices, methodologies, and tools aimed at the efficient and effective conception, design, development, and maintenance of software applications.",
+              "RESULTS": {
+                "keywords": [
+                  "Software engineering",
+                  "discipline",
+                  "practices",
+                  "methodologies",
+                  "tools",
+                  "conception",
+                  "design",
+                  "development",
+                  "maintenance",
+                  "software applications"
+                ],
+                "locations": [],
+                "proper names": []
+              }
+            }
+          ],
+          "result_tokens": 152,
+          "results_size": 715,
+          "run_proctime": "0:00:08.396154"
+        },
+        {
+          "run_type": "correlate locations to coordinates",
+          "instructions": "corr_latlong",
+          "payload_tokens": 6,
+          "payload_bytes": 18,
+          "results_full": [
+            {
+              "QUERY": "London",
+              "RESULTS": {
+                "latitude": 51.5074,
+                "longitude": -0.1278
+              }
+            },
+            {
+              "QUERY": "New York",
+              "RESULTS": {
+                "latitude": 40.7128,
+                "longitude": -74.006
+              }
+            }
+          ],
+          "result_tokens": 83,
+          "results_size": 278,
+          "run_proctime": "0:00:28.057611"
+        },
+        {
+          "run_type": "summarize, paragraph",
+          "instructions": "sum_short",
+          "payload_tokens": 730,
+          "payload_bytes": 3091,
+          "results_full": [
+            {
+              "QUERY": "Cinderella\n\nThe wife of a rich man fell sick and when she felt that her end drew nigh, she called her only daughter to her bedside, and said, \"Always be a good girl, and I will look down from heaven and watch over you.\" Soon afterwards she shut her eyes and died, and was buried in the garden; and the little girl went every day to her grave and wept, and was always good and kind to all about her. And the snow spread a beautiful white covering over the grave; but by the time the sun had melted it away again, her father had married another wife. This new wife had two daughters of her own: they were fair in face but foul at heart, and it was now a sorry time for the poor little girl. \"What does the good-for-nothing thing want in the parlor?\" said they; and they took away her fine clothes, and gave her an old frock to put on, and laughed at her and turned her into the kitchen.\n\nThen she was forced to do hard work; to rise early, before daylight, to bring the water, to make the fire, to cook and to wash. She had no bed to lie down on, but was made to lie by the hearth among the ashes, and they called her Cinderella.\n\nIt happened once that her father was going to the fair, and asked his wife's daughters what he should bring to them. \"Fine clothes,\" said the first. \"Pearls and diamonds,\" said the second. \"Now, child,\" said he to his own daughter, \"what will you have?\" \"The first sprig, dear father, that rubs against your hat on your way home,\" said she. Then he bought for the two first the fine clothes and pearls and diamonds they had asked for: and on his way home, as he rode through a green copse, a sprig of hazel brushed against him, so he broke it off and when he got home he gave it to his daughter. Then she took it, and went to her mother's grave and planted it there, and cried so much that it was watered with her tears; and there it grew and became a fine tree, and soon a little bird came and built its nest upon the tree, and talked with her and watched over her, and brought her whatever she wished for.\n\nNow it happened that the king of the land held a feast which was to last three days, and out of those who came to it his son was to choose a bride for himself; and Cinderella's two sisters were asked to come. So they called Cinderella, and said, \"Now, comb our hair, brush our shoes, and tie our sashes for us, for we are going to dance at the king's feast.\" Then she did as she was told, but when all was done she could not help crying, for she thought to herself, she would have liked to go to the dance too, and at last she begged her mother very hard to let her go, \"You! Cinderella?\" said she; \"you who have nothing to wear, no clothes at all, and who cannot even dance—you want to go to the ball?\" And when she kept on begging, to get rid of her, she said at last, \"I will throw this basinful of peas into the ash heap, and if you have picked them all out in two hours' time you shall go to the feast too.\" Then she threw the peas into the ashes; but the little maiden ran out at the back door into the garden.",
+              "RESULTS": {
+                "summary": "After her mother dies, a young girl is mistreated by her cruel stepmother and stepsisters but finds solace in a magical hazel tree before facing an impossible task to attend the king's feast."
+              }
+            }
+          ],
+          "result_tokens": 799,
+          "results_size": 3373,
+          "run_proctime": "0:00:09.832533"
+        },
+        {
+          "run_type": "short summarize, doc",
+          "instructions": "sum_docs",
+          "payload_tokens": 279,
+          "payload_bytes": 1712,
+          "results_full": [
+            {
+              "QUERY": "Radar Guided Missile\n\nA radar-guided air-to-air missile is a sophisticated weapon system designed for engagement and neutralization of aerial targets from a distance, utilizing radar technology for guidance. These missiles are launched from aircraft to intercept and destroy enemy aircraft or missiles. Their operation involves several key phases and components, which include:\n\n Key Components:\n\n1. Seeker Head: Equipped with radar sensors, the seeker head is responsible for detecting and tracking the target's radar echoes. It can operate in active, semi-active, or passive modes, depending on the missile's design.\n\n2. Guidance System: This system processes the data received from the seeker head and navigates the missile towards the target. In semi-active radar-guided missiles, the guidance system relies on the launch aircraft's radar to illuminate the target, while active radar-guided missiles have an onboard radar transmitter to illuminate the target independently.\n\n3. Propulsion System: Typically a rocket motor that propels the missile towards its target at high speeds. The propulsion system is designed to provide the missile with sufficient range and maneuverability to engage targets at various distances and altitudes.\n\n4. Warhead: The missile carries a high-explosive warhead designed to detonate on impact or in proximity to the target, causing damage or destruction. Some missiles may use fragmentation, blast, or shaped charges to maximize effectiveness against specific target types.\n\n5. Control Surfaces: Fins or canards that adjust the missile's flight path for guidance and maneuverability, allowing it to adjust its trajectory based on the guidance system's commands.",
+              "RESULTS": {
+                "summary": "Radar-guided air-to-air missiles are sophisticated weapons designed to intercept and destroy aerial targets using radar technology. Key components include a seeker head for tracking, a guidance system for navigation (which can be semi-active or active), a propulsion system for speed and range, a high-explosive warhead for detonation, and control surfaces for maneuverability."
+              }
+            }
+          ],
+          "result_tokens": 372,
+          "results_size": 2180,
+          "run_proctime": "0:00:07.986472"
+        }
+      ]
+    }
+  ]
+]

@@ -1,26 +1,21 @@
 ## AzzieL3MTools
 ## parse.py
 ## Hillman
-## Jun 2025
+## March 2026
 
 import nltk
 from nltk.tokenize import word_tokenize
-from nltk.tokenize import sent_tokenize
-from nltk.stem import PorterStemmer
-from string import punctuation
-import re
-
-# turned the following off...could run it once a week or as needed to update
-#nltk.download('punkt')
-
-# import pymupdf
-
 
 # This lib will contain a set of relatively simple parsing tools to be used by the rest of the application
 
 ## text to words using simple python
 def parse_to_wordlist(ptext):
-    wordlist = [line.strip() for line in ptext.strip().split('\n') if line.strip()]
+    if "\\n" in ptext:
+        wordlist = [line.strip() for line in ptext.strip().split('\\n') if line.strip()]
+    elif "," in ptext:
+        wordlist = [line.strip() for line in ptext.strip().split(',') if line.strip()]
+    else:
+        wordlist = [ptext]
     return wordlist
 
 # parse to words via nltk

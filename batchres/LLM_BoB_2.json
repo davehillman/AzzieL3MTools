@@ -1,0 +1,103 @@
+[
+  {
+    "platform": "Ollama (Web Remote)"
+  },
+  {
+    "instruction_set": {
+      "analyzeLLMaggregate": {
+        "preprompt": {
+          "qryid": "analyzeLLMaggregate",
+          "qrytype": "assess",
+          "qryname": "Analyze Aggregated Results Data",
+          "proctype": "json",
+          "system": {
+            "job": "You are analyzing test results from assessments of Large Language Models to choose a best-of-breed selection.",
+            "activity": [
+              "You are providing an aggregate analysis of the model test results.",
+              "The goal is to select LLMs for use in a CPU-based environment (desktop, tablet, cell), typically 8 to 16 GB of RAM.",
+              "The analysis should identify best-of-breed in terms of overall performance, accuracy, formatting, inferencing, resource consumption, and optimization.",
+              "Rank from best to worst.",
+              "Output results in JSON.",
+              "Limit the response to the JSON output model."
+            ],
+            "output": {
+              "all_models": [
+                "list all models under consideration from best to least"
+              ],
+              "best_of_breed": "model with best potential",
+              "justification": "explain why best-of-breed model was selected",
+              "alternative_selections": [
+                {
+                  "model": "model name",
+                  "details": "explain how model was identified as an alternate"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  [
+    {
+      "llm_config": {
+        "model": "glm-4.7:cloud",
+        "testrun": "",
+        "format": "",
+        "families": null,
+        "quantizationlevel": "",
+        "digest": "0236088648195aa13eaa52faa8152e8ac4fd7e4e137939d57a2a5576a8fd3df8",
+        "total_params": "",
+        "filesize GB": 3.27e-07
+      }
+    },
+    {
+      "llm_settings": {
+        "llmconfig": "Very Large Tokens",
+        "keep_alive": "30m",
+        "format": "json",
+        "role": "system",
+        "options": {
+          "temperature": 0.4,
+          "seed": 42,
+          "top_k": 40,
+          "top_p": 0.9,
+          "min_p": 0,
+          "num_ctx": 73728,
+          "num_predict": 512
+        }
+      },
+      "batch_run": [
+        {
+          "results_full": [
+            {
+              "RESULTS": {
+                "all_models": [
+                  "granite4:1b",
+                  "granite4:3b",
+                  "ministral-3:3b",
+                  "gemma3:4b",
+                  "qwen3:8b",
+                  "llama3.2:latest",
+                  "granite4:350m"
+                ],
+                "best_of_breed": "granite4:1b",
+                "justification": "The granite4:1b model was selected as the best-of-breed for a CPU-based environment with 8-16 GB of RAM because it offers the optimal balance of speed, efficiency, and accuracy. Unlike the larger 3b and 4b models, which score lower on performance and resource consumption (3/5), the 1b model maintains a high accuracy score of 4/5 while achieving superior performance (4/5) and resource efficiency (4/5). This makes it ideal for mobile and desktop CPU inference where memory bandwidth and processing power are limited, ensuring fast response times without significant degradation in output quality.",
+                "alternative_selections": [
+                  {
+                    "model": "granite4:3b",
+                    "details": "Identified as a strong alternative for scenarios where higher reasoning depth is required and resource constraints are less strict. It maintains high accuracy (4/5) and formatting (5/5) but sacrifices speed (3/5) and resource efficiency (3/5) compared to the 1b variant."
+                  },
+                  {
+                    "model": "ministral-3:3b",
+                    "details": "Selected as an alternative for its solid overall performance (4/5) and stability across configurations. It shares similar resource profiles to other 3b models, making it a viable backup if specific architectural preferences favor Mistral-based models."
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+]

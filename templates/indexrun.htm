@@ -1,14 +1,31 @@
-<!-- AzzieL3MTools, indexrun.htm, D. Hillman, SEP 2025 -->
+<!-- AzzieL3MTools, indexrun.htm, D. Hillman, Feb 2026 -->
 <html>
     <head>
         <title>Azzie L3M Tools</title>
         <script src="{{url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
+
         <link href="{{url_for('static',filename='css/w3.css')}}" rel="stylesheet">
         <link href="{{url_for('static',filename='css/background.css')}}" rel="stylesheet">
 
 <style>
     html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif; padding: 3px;}
     </style>
+
+  <style>
+    .dropzone {
+      width: 40%;
+      border: 2px dashed #aaa;
+      border-radius: 8px;
+      padding: 5px;
+      text-align: center;
+      transition: 0.3s;
+    }
+    .dropzone.dragover {
+      border-color: #2196F3;
+      background-color: #f1f8ff;
+    }
+  </style>
+
     </head>
   
   <body class="w3-flat-belize-hole">
@@ -17,13 +34,24 @@
   <div class="w3-container  w3-hover-shadow w3-round w3-black">
     <div class="w3-bar">
       <div class="w3-left w3-center">
-        <p class="w3-xlarge"><a style="text-decoration: none; color: inherit;" href="/"> L3M TOOLS </a></p>
+        <p class="w3-large">
+          L3M Tools: Run L3M Eval
+        </p>
+        <p class="w3-small">
+          <a style="text-decoration: none; color: inherit;" href="/"> Run L3M Eval </a>
+          &nbsp;&nbsp;&nbsp;
+          <a style="text-decoration: none; color: inherit;" href="/indexllmeval"> LLM/Batch Management </a>
+        </p>
       </div>
-      <div class="w3-right w3-small w3-center">
-        LLM: &nbsp;&nbsp;  
+      <div class="w3-right w3-small w3-left">
+        <!-- LLM: &nbsp;&nbsp;   -->
         <select class="w3-input w3-black w3-text-white w3-round w3-small" style="width:100%" id="llm_models" title="Select an LLM for processing.">
           <option value="">Select LLM...</option>
         </select>
+        <!-- Settings: -->
+        <select class="w3-input w3-black w3-text-white w3-round w3-small" style="width:100%" id="llm_settings" title="Select an LLM for processing.">
+          <!-- <option value="Baseline">Select Settings (LLM)...</option> -->
+        </select>        
       </div>      
   </div>
 </div>
@@ -31,16 +59,17 @@
     <br>
 
     <div class="w3-container w3-hover-shadow w3-round">
-<br>
 
 <div class="w3-bar">
-  <!-- <div class="w3-left">
-    Query:&nbsp;&nbsp;
-  </div> -->
-  <div class="w3-middle" >   
-    <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="qrytxt" rows="3" style="width:80%" title="Enter query for processing." placeholder="Enter Query"></textarea>
+    <div id="dropzone" class="dropzone w3-margin-bottom w3-hover-shadow">
+      <p class="w3-text-dark-blue">Drag & drop text file here or click to select a file...</p>
+      <input type="file" id="fileInput" class="w3-input" accept=".txt,.json" style="display:none;">
+    </div>
+
+
+    <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="qrytxt" rows="3" style="width:90%" title="Enter query for processing." placeholder="Enter Query"></textarea>
+
   </div>
-</div>
 <br>
 
 <div class="w3-bar">
@@ -61,12 +90,10 @@
 
 <div id="divresults" class="w3-container w3-hover-shadow w3-round" hidden>
   <br>
+  Results:
   <div class="w3-bar">
-    <div class="w3-left">
-      Results: &nbsp;&nbsp;
-    </div>
     <div class="w3-middle w3-small">
-      <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="llmorig" rows="4" style="width:80%" title="Results from processing in JSON format."></textarea>
+      <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="llmorig" rows="4" style="width:90%" title="Results from processing in JSON format."></textarea>
     </div>
     </div>
 
@@ -88,7 +115,7 @@
       <span onclick="document.getElementById('showsession').style.display='none'"  class="w3-button w3-display-topright">&times;</span>
       <h3>Session History</h3>
     </header>
-    <div class=""w3-container w3-blue w3-center">
+    <div class="w3-container w3-blue w3-center">
           <textarea class="w3-input w3-border w3-round w3-light-blue w3-text-black" id="sessbox" style="height:40%; width:100%" title="Keeps track of current queries and responses." ></textarea>
     </div>
           <footer class="w3-container w3-blue">
@@ -109,18 +136,23 @@
     <button class="w3-button w3-black w3-round" id="btnclear" title="Remove contents from the Query and Response.">Clear</button>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <button onclick="document.getElementById('showsession').style.display='block'" class="w3-button">Session</button>
+       <!-- &nbsp;&nbsp;&nbsp;&nbsp;
+    <button onclick="document.getElementById('llminfo').style.display='block'" class="w3-button">LLM Info</button> -->
   </div>
 </div>
 </div>
 
 
 </body>
+        <script src="{{url_for('static', filename='js/filedrop.js')}}"></script>
+
 <script>
 
 $(document).ready(function() {
       loadmodels()
+      loadsettings()
       loadpromptset()
-      getcurrllm()
+   //   getcurrllm()
 })
 
 
@@ -150,42 +182,45 @@ $('#btnppres').on('click', function(e) {
 
        
     // following runs the query once user has selected criteria.
-    function runquery() {
+function runquery() {
       document.getElementById("divresults").hidden = true
       qrytxt = document.getElementById("qrytxt").value 
       llm = document.getElementById("llm_models").value
-      results = runprocajax(llm, qrytxt)
+      llmsettings = document.getElementById("llm_settings").value
+      results = runprocajax(llm, qrytxt,llmsettings)
+}
+
+function ajrun(urlcall, typecall, params,outfun) { 
+    $.ajax({
+        type: typecall,
+        url:  urlcall,
+        data: params,
+        async: true,
+        success: function(data){
+          results = JSON.parse(data)
+          outfun(results)
+          },
+        error: function(error){
+          console.log(JSON.stringify(error))
+        }
+      }) 
     }
 
-
- function runprocajax(llm,qrytxt) {
-  pp = document.getElementById("llm_preprompts").value
-  results = []
-  $.ajax({
-    type:'POST',
-    url: '/runquery',
-    data: {llm: llm, qrydata: qrytxt, pp: pp},
-    async: true,
-    success: function(data){
-      results = JSON.parse(data)
-      finishquery(results)
-      getcurrllm()
-      transformJson('llmorig')
-      sessiontrack(document.getElementById('output').textContent);
-      },
-    error: function(error){
-      console.log(JSON.stringify(error))
-    }
-  }) 
-
- }
  
+ function runprocajax(llm,qrytxt,llmset) {
+  pp = document.getElementById("llm_preprompts").value
+  ajrun('/runquery','POST',{llm: llm, qrydata: qrytxt, pp: pp,llmset: llmset},finishquery)
+ }
+
+
   function finishquery(results)  { 
       document.getElementById("llmorig").value = results[0]
       document.getElementById("output").textContent = ""
       document.getElementById("divresults").hidden = false
       document.getElementById("status").value = "Run COMPLETED "
-
+      // getcurrllm()
+      transformJson('llmorig')
+      sessiontrack(document.getElementById('output').textContent);
  }
 
  //====================================================
@@ -194,109 +229,93 @@ $('#btnppres').on('click', function(e) {
 
     document.getElementById("status").value = "INITIALIZING LLM"
     llm = document.getElementById("llm_models").value
-    $.ajax({
-    type:'POST',
-    url: '/initllm',
-    data: {llmsel:llm},
-    async: true,
-    success: function(data){
-      results = JSON.parse(data)
-      document.getElementById("status").value = "LLM Ready" 
-      getcurrllm()
-    },
-    error: function(error){
-      console.log(JSON.stringify(error))
-    }
-  }) 
+    if (! llm.includes(":cloud")) {
+    ajrun('/initllm','POST',{llmsel:llm},fininit)
+ }
 })
 
+function fininit(results) {
+      document.getElementById("status").value = "LLM Ready" 
+      getcurrllm()
+}
+
+
 $('#btnloadtest').on('click', function(e) {
-    $.ajax({
-    type:'POST',
-    url: '/loadtest',
-    data: {},
-    async: true,
-    success: function(data){
-      results = JSON.parse(data)
-      document.getElementById("qrytxt").value = results
-      },
-    error: function(error){
-      console.log(JSON.stringify(error))
-    }
-  }) 
+  pp = document.getElementById("llm_preprompts").value
+  ajrun('/loadtest','POST',{pp:pp},finloadtest)
 })
+
+function finloadtest(results) {
+ document.getElementById("qrytxt").value = results
+}
+
 
 
 //following loads LLM models to select list
-    function loadmodels() {
+function loadmodels() {
       $('#llm_models').clearQueue()
-    $.ajax({
-        type:'POST',
-        url: '/loadmodels',
-        data: {},
-        async: true,
-        success: function(data){
-          dslist = JSON.parse(data);
+      ajrun('/loadmodels','POST',{},finloadmodels)
+}
+    
+function finloadmodels(results) {
+          dslist = results
           for (i=0;i<dslist.length;i++) {
             var option = new Option();
-            option.value = dslist[i]
-            option.text = dslist[i]
+            option.value = dslist[i]["model"].trim()
+            option.text = dslist[i]["details"].trim()
             $('#llm_models').append(option);
           }
-        
-        },
-        error: function(error){
-          console.log(JSON.stringify(error))
-        }
-      })
 
-    }
-    
-    pqry = [];
+}
+
+
+
+function loadsettings() {
+      $('#llm_settings').clearQueue()
+      ajrun('/loadsettings','POST',{},finloadsettings)
+
+}
+
+function finloadsettings(results) {
+          dslist = results
+          for (i=0;i<dslist.length;i++) {
+            var option = new Option();
+            option.value = dslist[i].trim()
+            option.text = dslist[i].trim()
+            $('#llm_settings').append(option);
+          }
+}
+
+pqry = [];
     
     // following loads prompts to llm_preprompts
-    function loadpromptset() {
-    $.ajax({
-        type:'POST',
-        url: '/loadprompts',
-        data: {},
-        async: true,
-        success: function(data){
-          dslist = JSON.parse(data);
-          for (i=0;i<dslist.length;i++) {
+function loadpromptset() {
+    ajrun('/loadprompts','POST',{},finloadpromptset)
+}
+
+function finloadpromptset(results)  {
+  dslist = results
+  for (i=0;i<dslist.length;i++) {
             var option = new Option();
             option.value = dslist[i][0]
             option.text = dslist[i][1] 
-            pqry[i] = dslist[2][i]
+            pqry[i] = dslist[2][i] 
             $('#llm_preprompts').append(option);
-          }
+  }
+  getcurrllm()
+}
 
-        },
-        error: function(error){
-          console.log(JSON.stringify(error))
-        }
-      })
-    }
 
 function getcurrllm() { 
-    $.ajax({
-        type:'GET',
-        url:  '/getcurrentllm',
-        data: {},
-        async: true,
-        success: function(data){
-          results = JSON.parse(data)
-          document.getElementById("llm_models").value = results
-          },
-        error: function(error){
-          console.log(JSON.stringify(error))
-        }
-      }) 
-    }
+  ajrun('/getcurrentllm','GET',{},fingetcurrllm)
+}
+
+function fingetcurrllm (results) {
+  document.getElementById("llm_models").value = results
+}
 
 // ==========================
  
-
 function jsonToFormattedText(obj, indent = 0) {
   let result = "";
   const padding = "  ".repeat(indent); // 2-space indentation
@@ -349,9 +368,6 @@ function sessiontrack(update) {
   document.getElementById("sessbox").value = newupd
 
 }
-
-
-
 
 
 </script>

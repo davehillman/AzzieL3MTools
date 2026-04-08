@@ -1,0 +1,339 @@
+[
+  {
+    "platform": "Ollama (Web Remote)"
+  },
+  {
+    "instruction_set": {
+      "analyzeLLMresults": {
+        "preprompt": {
+          "qryid": "analyzeLLMresults",
+          "qrytype": "assess",
+          "qryname": "Analyze Results Data",
+          "proctype": "json",
+          "system": {
+            "criteria": [
+              "Performance based on query execution speed scored as 1 for poor to 5 for very good",
+              "Accuracy in terms of output correctness scored as 1 for poor to 5 for very good",
+              "Format correctness of output JSON scored as 1 for poor to 5 for very good",
+              "Inferencing from query to output scored as 1 for poor t 5 for very good",
+              "Resource consumption in terms of memory, tokens scored as 1 for poor to 5 for very good",
+              "Optimization in terms of settings includng: temperature, num_ctx; scored as 1 for poor to 5 for very good",
+              "Overall assessment scored as 1 for poor to 5 for very good."
+            ],
+            "job": "You are analyzing results from Large Language Models over a variety of settings, prompts, and test scenarios. You will generate a report in JSON.",
+            "activity": "Analyze and summarize the data for each model and determine a numerical score based a range from 1 for poor to 5 for very good. Limit the response to the JSON output model.",
+            "output": [
+              {
+                "model_name": "name of the model being analyzed"
+              },
+              {
+                "analytic_cats": [
+                  {
+                    "performance": "scored as 1 for poor to 5 for very good",
+                    "note": "comments on scoring"
+                  },
+                  {
+                    "accuracy": "scored as 1 for poor to 5 for very good",
+                    "note": "comments on scoring"
+                  },
+                  {
+                    "formatting": "scored as 1 for poor to 5 for very good",
+                    "note": "comments on scoring"
+                  },
+                  {
+                    "inferencing": "scored as 1 for poor to 5 for very good",
+                    "note": "comments on inferencing"
+                  },
+                  {
+                    "resource_consumption": "scored as 1 for poor to 5 for very good",
+                    "note": "comments on scoring"
+                  },
+                  {
+                    "optimization": "pscored as 1 for poor to 5 for very good",
+                    "note": "comments on scoring"
+                  },
+                  {
+                    "overall_assessment": "scored as 1 for poor to 5 for very good",
+                    "note": "comments on scoring"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  [
+    {
+      "llm_config": {
+        "model": "glm-4.7:cloud",
+        "testrun": "",
+        "format": "",
+        "families": null,
+        "quantizationlevel": "",
+        "digest": "0236088648195aa13eaa52faa8152e8ac4fd7e4e137939d57a2a5576a8fd3df8",
+        "total_params": "",
+        "filesize GB": 3.27e-07
+      }
+    },
+    {
+      "llm_settings": {
+        "llmconfig": "Very Large Tokens",
+        "keep_alive": "30m",
+        "format": "json",
+        "role": "system",
+        "options": {
+          "temperature": 0.4,
+          "seed": 42,
+          "top_k": 40,
+          "top_p": 0.9,
+          "min_p": 0,
+          "num_ctx": 73728,
+          "num_predict": 512
+        }
+      },
+      "batch_run": [
+        {
+          "results_full": [
+            {
+              "RESULTS": [
+                {
+                  "model_name": "granite4:350m",
+                  "analytic_cats": [
+                    {
+                      "performance": 5,
+                      "note": "Extremely fast execution times (e.g., <4s), but speed is irrelevant due to failure to complete tasks."
+                    },
+                    {
+                      "accuracy": 1,
+                      "note": "Fails to answer queries or perform tasks; often repeats the system prompt instructions instead of generating content."
+                    },
+                    {
+                      "formatting": 5,
+                      "note": "Output is valid JSON, though the content is incorrect."
+                    },
+                    {
+                      "inferencing": 1,
+                      "note": "Demonstrates no ability to infer or follow instructions; simply echoes input prompts."
+                    },
+                    {
+                      "resource_consumption": 5,
+                      "note": "Very low resource usage due to small model size (352M params)."
+                    },
+                    {
+                      "optimization": 5,
+                      "note": "Settings are standard, but the model is too small for the tasks."
+                    },
+                    {
+                      "overall_assessment": 1,
+                      "note": "The model is too small to be useful for these specific tasks, resulting in complete failure to generate meaningful responses."
+                    }
+                  ]
+                },
+                {
+                  "model_name": "granite4:3b",
+                  "analytic_cats": [
+                    {
+                      "performance": 3,
+                      "note": "Moderate execution speed, averaging around 15-30 seconds per task."
+                    },
+                    {
+                      "accuracy": 4,
+                      "note": "High accuracy across tasks; correctly categorizes items, defines terms, and classifies sensitive text."
+                    },
+                    {
+                      "formatting": 5,
+                      "note": "Consistently outputs valid JSON structures."
+                    },
+                    {
+                      "inferencing": 4,
+                      "note": "Good logical reasoning and adherence to complex instructions."
+                    },
+                    {
+                      "resource_consumption": 3,
+                      "note": "Moderate resource consumption suitable for the 3.4B parameter size."
+                    },
+                    {
+                      "optimization": 4,
+                      "note": "Performs well across different temperature settings without significant degradation."
+                    },
+                    {
+                      "overall_assessment": 4,
+                      "note": "A reliable model that balances speed and accuracy effectively for the given benchmarks."
+                    }
+                  ]
+                },
+                {
+                  "model_name": "granite4:1b",
+                  "analytic_cats": [
+                    {
+                      "performance": 4,
+                      "note": "Fast execution, often completing tasks in under 15 seconds."
+                    },
+                    {
+                      "accuracy": 4,
+                      "note": "Generally accurate with definitions and categorization; some variance in classification tasks based on temperature settings."
+                    },
+                    {
+                      "formatting": 5,
+                      "note": "Outputs valid JSON consistently."
+                    },
+                    {
+                      "inferencing": 4,
+                      "note": "Capable of following instructions and extracting relevant information."
+                    },
+                    {
+                      "resource_consumption": 4,
+                      "note": "Efficient resource usage for a 1.6B parameter model."
+                    },
+                    {
+                      "optimization": 4,
+                      "note": "Good performance with standard settings."
+                    },
+                    {
+                      "overall_assessment": 4,
+                      "note": "An efficient smaller model that maintains good accuracy and speed."
+                    }
+                  ]
+                },
+                {
+                  "model_name": "ministral-3:3b",
+                  "analytic_cats": [
+                    {
+                      "performance": 3,
+                      "note": "Average speed, taking roughly 10-20 seconds for most operations."
+                    },
+                    {
+                      "accuracy": 4,
+                      "note": "Provides correct definitions and categorizations; handles extraction tasks well."
+                    },
+                    {
+                      "formatting": 5,
+                      "note": "Produces valid JSON output."
+                    },
+                    {
+                      "inferencing": 4,
+                      "note": "Demonstrates solid understanding of prompts and context."
+                    },
+                    {
+                      "resource_consumption": 3,
+                      "note": "Standard resource usage for a model of this class."
+                    },
+                    {
+                      "optimization": 4,
+                      "note": "Stable performance across varying configurations."
+                    },
+                    {
+                      "overall_assessment": 4,
+                      "note": "A competent model with no major weaknesses in the tested scenarios."
+                    }
+                  ]
+                },
+                {
+                  "model_name": "qwen3:8b",
+                  "analytic_cats": [
+                    {
+                      "performance": 1,
+                      "note": "Very slow execution, often exceeding 1.5 to 4 minutes per query."
+                    },
+                    {
+                      "accuracy": 5,
+                      "note": "Excellent accuracy with detailed and precise responses to complex queries."
+                    },
+                    {
+                      "formatting": 5,
+                      "note": "Correctly formats output as JSON."
+                    },
+                    {
+                      "inferencing": 5,
+                      "note": "Superior reasoning capabilities and context understanding."
+                    },
+                    {
+                      "resource_consumption": 1,
+                      "note": "High latency and token consumption due to large size (8.2B params)."
+                    },
+                    {
+                      "optimization": 3,
+                      "note": "Settings do not mitigate the inherent slowness of the model."
+                    },
+                    {
+                      "overall_assessment": 3,
+                      "note": "While highly accurate, the poor performance speed significantly limits its practical utility for these tasks."
+                    }
+                  ]
+                },
+                {
+                  "model_name": "llama3.2:latest",
+                  "analytic_cats": [
+                    {
+                      "performance": 4,
+                      "note": "Fast execution times, generally under 15 seconds."
+                    },
+                    {
+                      "accuracy": 2,
+                      "note": "Struggles with specific logic tasks; failed to correctly categorize 'boulder' (returned 'other' instead of 'mineral') and missed keywords in extraction."
+                    },
+                    {
+                      "formatting": 5,
+                      "note": "Valid JSON structure."
+                    },
+                    {
+                      "inferencing": 2,
+                      "note": "Weak adherence to constraints and logic in categorization and extraction tasks."
+                    },
+                    {
+                      "resource_consumption": 4,
+                      "note": "Efficient usage of resources."
+                    },
+                    {
+                      "optimization": 4,
+                      "note": "Settings are appropriate, but model logic is lacking."
+                    },
+                    {
+                      "overall_assessment": 2,
+                      "note": "Fast but unreliable for tasks requiring strict logical categorization or detailed extraction."
+                    }
+                  ]
+                },
+                {
+                  "model_name": "gemma3:4b",
+                  "analytic_cats": [
+                    {
+                      "performance": 3,
+                      "note": "Moderate speed, comparable to other 3-4B models."
+                    },
+                    {
+                      "accuracy": 4,
+                      "note": "Accurate definitions, correct categorization, and good keyword extraction."
+                    },
+                    {
+                      "formatting": 5,
+                      "note": "Consistently valid JSON output."
+                    },
+                    {
+                      "inferencing": 4,
+                      "note": "Good understanding of instructions and context."
+                    },
+                    {
+                      "resource_consumption": 3,
+                      "note": "Standard resource profile for its size."
+                    },
+                    {
+                      "optimization": 4,
+                      "note": "Performs well with the provided settings."
+                    },
+                    {
+                      "overall_assessment": 4,
+                      "note": "A strong performer that offers a good balance of speed, accuracy, and formatting."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+]

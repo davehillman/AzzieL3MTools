@@ -1,23 +1,79 @@
 {
-    "llm": {
-        "model": ["hermes3:latest","qwen3:latest","qwen2:7b", "granite3.1-dense:latest","gemma2:9b","mistral-nemo:latest"],
-        "keep_alive": "30m",
-        "all_models": [
-            "qwen3:latest -tested, best for now",
-            "granite3.1-dense:latest -tested",
-            "hermes3:latest -tested, fast accurate",
-            "mistral-nemo:latest -tested, not bad",
-            "qwen2.5:latest  -tested, fast",
-            "qwen2:7b -tested, fast, accurate BoB",
-            "gemma2:9b -tested, accuracy is a bit off, but fast"
-            
-        ],
-        "setup": {
-            "role": "system",
-            "temperature": 0.7,
-            "format": "json",
-            "seed": 42,
-            "num_ctx": 1024
-        }
+  "llmsettings": [
+    {
+      "llmconfig": "Baseline",
+      "keep_alive": "30m",
+      "format": "json",
+      "role": "system",
+      "options": {
+        "temperature": 0.7,
+        "seed": 42,
+        "top_k": 40,
+        "top_p": 0.9,
+        "min_p": 0,
+        "num_ctx": 1024,
+        "num_predict": 512
+      }
+    },
+    {
+      "llmconfig": "Low Temp",
+      "keep_alive": "30m",
+      "format": "json",
+      "role": "system",
+      "options": {
+        "temperature": 0.2,
+        "seed": 42,
+        "top_k": 40,
+        "top_p": 0.9,
+        "min_p": 0,
+        "num_ctx": 1024,
+        "num_predict": 512
+      }
+    },
+    {
+      "llmconfig": "Moderate Temperature",
+      "keep_alive": "30m",
+      "format": "json",
+      "role": "system",
+      "options": {
+        "temperature": 0.4,
+        "seed": 42,
+        "top_k": 40,
+        "top_p": 0.9,
+        "min_p": 0,
+        "num_ctx": 1024,
+        "num_predict": 512
+      }
+    },
+    {
+      "llmconfig": "High Tokens",
+      "keep_alive": "30m",
+      "format": "json",
+      "role": "system",
+      "options": {
+        "temperature": 0.4,
+        "seed": 42,
+        "top_k": 40,
+        "top_p": 0.9,
+        "min_p": 0,
+        "num_ctx": 4096,
+        "num_predict": 512
+      }
+    },
+    {
+      "llmconfig": "Very Large Tokens",
+      "keep_alive": "30m",
+      "format": "json",
+      "role": "system",
+      "options": {
+        "temperature": 0.4,
+        "seed": 42,
+        "top_k": 40,
+        "top_p": 0.9,
+        "min_p": 0,
+        "num_ctx": 73728,
+        "num_predict": 512
+      }
     }
+  ]
 }
