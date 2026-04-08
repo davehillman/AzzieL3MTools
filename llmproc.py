@@ -1,7 +1,7 @@
 ## AzzieL3MTools
 ## llmproc.py
 ## Hillman
-## March 2026
+## April 2026
 
 import ollama
 import utils
@@ -173,7 +173,7 @@ def getlocalmodels():
 
 BASE_URL = "https://ollama.com"
 # need to make the following secret
-API_KEY = "1aecaea8d2ad403e908041584e527303.R05DKGCkSNUKjvE9SkHCbB9U"
+API_KEY = ""
 
 ## following provides a list via the web interface and access to Ollama
 def list_models():
